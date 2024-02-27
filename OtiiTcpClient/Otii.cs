@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 namespace OtiiTcpClient {
+
     /// <summary>
     /// The Otii class provides methods at the application level of Otii.
     /// </summary>

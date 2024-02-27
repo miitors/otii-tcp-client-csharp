@@ -2,14 +2,15 @@
 using System.Linq;
 
 namespace OtiiTcpClient {
+
     public partial class Arc {
         public string DeviceId { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
+        public DeviceType Type { get; set; }
 
         private readonly OtiiClient _client;
 
-        internal Arc(OtiiClient client, string device_id, string name, string type) {
+        internal Arc(OtiiClient client, string device_id, string name, DeviceType type) {
             _client = client;
             DeviceId = device_id;
             Name = name;
@@ -66,193 +67,15 @@ namespace OtiiTcpClient {
             _client.PostRequest(request);
         }
 
-<<<<<<< .mine
-		/// <summary>
-		/// Enables or disables a specified measurement <see cref="Channel"/> for recording.
-		/// </summary>
-		/// <remarks>
-		/// Closing a project disables all measurement channels.
-		/// </remarks>
-		/// <param name="channel">The <see cref="Channel"/> to enable or disable.</param>
-		/// <param name="enable"><see langword="true"/> to enable the channel; <see langword="false"/> to disable it.</param>
-		public void EnableChannel(Channel channel, bool enable) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
         /// <summary>
-        /// Enable or disable a measurement channel.
-        /// <para><b>Available channels:</b></para>
-        /// <list type="table">
-        ///     <listheader>
-        ///         <term>Channel</term>
-        ///         <term>Description</term>
-        ///         <term>Unit</term>
-        ///     </listheader>
-        ///     <item>
-        ///         <term>mc</term>
-        ///         <term>Main Current</term>
-        ///         <term>A</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>mv</term>
-        ///         <term>Main Voltage</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>ac</term>
-        ///         <term>ADC Current</term>
-        ///         <term>A</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>av</term>
-        ///         <term>ADC Voltage</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>sv</term>
-        ///         <term>Sense+ Voltage</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>sn</term>
-        ///         <term>Sense- Voltage</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>vb</term>
-        ///         <term>VBUS</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>vj</term>
-        ///         <term>DC-Jack</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>tp</term>
-        ///         <term>Temperature</term>
-        ///         <term>°C</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>rx</term>
-        ///         <term>UART Logs</term>
-        ///         <term>Text</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>i1</term>
-        ///         <term>GPI1</term>
-        ///         <term>Digital</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>i2</term>
-        ///         <term>GPI2</term>
-        ///         <term>Digital</term>
-        ///     </item>
-        /// </list>
-        /// <para>In addition to above channels, two more channels are enabled automatically when their respective current channel is enabled:</para>
-        /// <list type="table">
-        ///     <listheader>
-        ///         <term>Channel</term>
-        ///         <term>Description</term>
-        ///         <term>Unit</term>
-        ///     </listheader>
-        ///     <item>
-        ///         <term>me</term>
-        ///         <term>Main Energy</term>
-        ///         <term>J</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>ae</term>
-        ///         <term>ADC Energy</term>
-        ///         <term>J</term>
-        ///     </item>
-        /// </list>
+        /// Enables or disables a specified measurement <see cref="Channel"/> for recording.
         /// </summary>
-        /// <param name="channel">the channel to enable or disable.</param>
-        /// <param name="enable">set to true to enable, and to false to disable.</param>
-        public void EnableChannel(string channel, bool enable) {
->>>>>>> .theirs
+        /// <remarks>
+        /// Closing a project disables all measurement channels.
+        /// </remarks>
+        /// <param name="channel">The <see cref="Channel"/> to enable or disable.</param>
+        /// <param name="enable"><see langword="true"/> to enable the channel; <see langword="false"/> to disable it.</param>
+        public void EnableChannel(Channel channel, bool enable) {
             var request = new EnableChannelRequest(DeviceId, channel, enable);
             _client.PostRequest(request);
         }
@@ -333,7 +156,7 @@ namespace OtiiTcpClient {
         /// Get the current measurement range on the main output.
         /// </summary>
         /// <returns>the current range, "low" or "high".</returns>
-        public string GetRange() {
+        public MeasurementRange GetRange() {
             var request = new GetRangeRequest(DeviceId);
             var response = _client.PostRequest<GetRangeRequest, GetRangeResponse>(request);
             return response.Data.Range;
@@ -523,7 +346,7 @@ namespace OtiiTcpClient {
         /// Set power regulation mode.
         /// </summary>
         /// <param name="mode">one of the following: "voltage", "current", "off".</param>
-        public void SetPowerRegulation(string mode) {
+        public void SetPowerRegulation(PowerRegulationMode mode) {
             var request = new SetPowerRegulationRequest(DeviceId, mode);
             _client.PostRequest(request);
         }
@@ -532,7 +355,7 @@ namespace OtiiTcpClient {
         /// Set the main outputs measurement range.
         /// </summary>
         /// <param name="range">"low" or "high". "low" will enable auto-range, "high" will force the use of high-range.</param>
-        public void SetRange(string range) {
+        public void SetRange(MeasurementRange range) {
             var request = new SetRangeRequest(DeviceId, range);
             _client.PostRequest(request);
         }

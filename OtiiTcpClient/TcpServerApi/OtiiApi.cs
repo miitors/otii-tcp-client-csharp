@@ -1,29 +1,37 @@
 ﻿using Newtonsoft.Json;
 
 namespace OtiiTcpClient {
+
     public partial class Otii {
+
         private class CreateProjectRequest : Request {
+
             public CreateProjectRequest() : base("otii_create_project") {
             }
         }
 
         private class CreateProjectResponse : Response {
+
             [JsonProperty("data")]
             public ProjectData Data { get; set; }
         }
 
         private class GetActiveProjectRequest : Request {
+
             public GetActiveProjectRequest() : base("otii_get_active_project") {
             }
         }
 
         private class GetActiveProjectResponse : Response {
+
             [JsonProperty("data")]
             public ProjectData Data { get; set; }
         }
 
         private class GetDeviceIdRequest : Request {
+
             public class GetDeviceIdData {
+
                 [JsonProperty("device_name")]
                 public string DeviceName { get; set; }
 
@@ -41,7 +49,9 @@ namespace OtiiTcpClient {
         }
 
         private class GetDeviceIdResponse : Response {
+
             public class GetDeviceIdResponseData {
+
                 [JsonProperty("device_id")]
                 public string DeviceId { get; set; }
             }
@@ -51,7 +61,9 @@ namespace OtiiTcpClient {
         }
 
         private class GetDevicesRequest : Request {
+
             public class GetDevicesData {
+
                 [JsonProperty("timeout")]
                 public int Timeout { get; set; }
 
@@ -69,7 +81,9 @@ namespace OtiiTcpClient {
         }
 
         private class GetDevicesResponse : Response {
+
             public class DevicesData {
+
                 [JsonProperty("devices")]
                 public ArcData[] Devices { get; set; }
             }
@@ -79,12 +93,15 @@ namespace OtiiTcpClient {
         }
 
         private class GetLicensesRequest : Request {
+
             public GetLicensesRequest() : base("otii_get_licenses") {
             }
         }
 
         private class GetLicensesResponse : Response {
+
             public class LicensesData {
+
                 [JsonProperty("licenses")]
                 public LicenseData[] Licenses { get; set; }
             }
@@ -94,7 +111,9 @@ namespace OtiiTcpClient {
         }
 
         private class LoginRequest : Request {
+
             public class LoginRequestData {
+
                 [JsonProperty("username")]
                 public string Username { get; set; }
 
@@ -116,12 +135,15 @@ namespace OtiiTcpClient {
         }
 
         private class LogoutRequest : Request {
+
             public LogoutRequest() : base("otii_logout") {
             }
         }
 
         private class OpenProjectRequest : Request {
+
             public class OpenProjectRequestData {
+
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
 
@@ -147,7 +169,9 @@ namespace OtiiTcpClient {
         }
 
         private class OpenProjectResponse : Response {
+
             public class OpenProjectResponseData : ProjectData {
+
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
             }
@@ -157,7 +181,9 @@ namespace OtiiTcpClient {
         }
 
         private class ReserveLicenseRequest : Request {
+
             public class ReserveLicenseRequestData {
+
                 [JsonProperty("license_id")]
                 public int LicenseId { get; set; }
 
@@ -175,7 +201,9 @@ namespace OtiiTcpClient {
         }
 
         private class ReturnLicenseRequest : Request {
+
             public class ReturnLicenseRequestData {
+
                 [JsonProperty("license_id")]
                 public int LicenseId { get; set; }
 
@@ -193,7 +221,9 @@ namespace OtiiTcpClient {
         }
 
         private class SetAllMainRequest : Request {
+
             public class SetAllMainRequestData {
+
                 [JsonProperty("enable")]
                 public bool Enable { get; set; }
 
@@ -211,16 +241,19 @@ namespace OtiiTcpClient {
         }
 
         private class ShutdownRequest : Request {
+
             public ShutdownRequest() : base("otii_shutdown") {
             }
         }
 
         private class ProjectData {
+
             [JsonProperty("project_id")]
             public int ProjectId { get; set; }
         }
 
         private class ArcData {
+
             [JsonProperty("device_id")]
             public string DeviceId { get; set; }
 
@@ -228,10 +261,11 @@ namespace OtiiTcpClient {
             public string Name { get; set; }
 
             [JsonProperty("type")]
-            public string Type { get; set; }
+            public DeviceType Type { get; set; }
         }
 
         private class LicenseData {
+
             [JsonProperty("id")]
             public int Id { get; set; }
 
@@ -252,6 +286,7 @@ namespace OtiiTcpClient {
         }
 
         private class Addon {
+
             [JsonProperty("id")]
             public string Id { get; set; }
 
@@ -260,6 +295,7 @@ namespace OtiiTcpClient {
         }
 
         private class AddonAttribute {
+
             [JsonProperty("channels")]
             public int Channels { get; set; }
         }

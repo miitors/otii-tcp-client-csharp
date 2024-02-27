@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using Newtonsoft.Json;
 
 namespace OtiiTcpClient {
+
     /// <summary>
     /// OtiiClient is used to create a connection to an Otii TCP server using Connect.
     /// When connected the Otii API can be accessed through the property Otii.
@@ -21,14 +22,9 @@ namespace OtiiTcpClient {
         /// </summary>
         public Otii Otii { get { return _otii; } }
 
-		public OtiiClient()
-		{
-		}
-
-		public OtiiClient(Otii otii){
-            _otii = otii;
+        public OtiiClient() {
+            _otii = new Otii(this);
         }
-
 
         /// <summary>
         /// Connect to an Otii TCP Server
@@ -90,7 +86,9 @@ namespace OtiiTcpClient {
         }
 
         private class ServerStatus {
+
             public class ServerStatusData {
+
                 [JsonProperty("otii_version")]
                 public string OtiiVersion { get; set; }
 
@@ -113,6 +111,7 @@ namespace OtiiTcpClient {
     }
 
     internal class Request {
+
         [JsonProperty("type")]
         public string Type { get; set; }
 
@@ -130,6 +129,7 @@ namespace OtiiTcpClient {
     }
 
     internal class Response {
+
         [JsonProperty("type")]
         public string Type { get; set; }
 
@@ -139,5 +139,4 @@ namespace OtiiTcpClient {
         [JsonProperty("trans_id")]
         public string TransId { get; set; }
     }
-
 }

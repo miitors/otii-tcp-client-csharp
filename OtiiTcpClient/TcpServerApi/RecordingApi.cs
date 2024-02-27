@@ -1,8 +1,12 @@
 ﻿using Newtonsoft.Json;
+using OtiiTcpClient.Types;
 
 namespace OtiiTcpClient {
+
     public partial class Recording {
+
         private class RecordingRequestData {
+
             [JsonProperty("recording_id")]
             public int RecordingId { get; set; }
 
@@ -12,19 +16,21 @@ namespace OtiiTcpClient {
         }
 
         private class ChannelRequestData : RecordingRequestData {
+
             [JsonProperty("device_id")]
             public string DeviceId { get; set; }
 
             [JsonProperty("channel")]
-            public string Channel { get; set; }
+            public Channel Channel { get; set; }
 
-            public ChannelRequestData(int recordingId, string deviceId, string channel) : base(recordingId) {
+            public ChannelRequestData(int recordingId, string deviceId, Channel channel) : base(recordingId) {
                 DeviceId = deviceId;
                 Channel = channel;
             }
         }
 
         private class DeleteRequest : Request {
+
             [JsonProperty("data")]
             public RecordingRequestData Data { get; set; }
 
@@ -34,11 +40,13 @@ namespace OtiiTcpClient {
         }
 
         private class DownsampleChannelRequest : Request {
+
             public class DownsampleChannelRequestData : ChannelRequestData {
+
                 [JsonProperty("factor")]
                 public int Factor { get; set; }
 
-                public DownsampleChannelRequestData(int recordingId, string deviceId, string channel, int factor) : base(recordingId, deviceId, channel) {
+                public DownsampleChannelRequestData(int recordingId, string deviceId, Channel channel, int factor) : base(recordingId, deviceId, channel) {
                     Factor = factor;
                 }
             }
@@ -46,22 +54,25 @@ namespace OtiiTcpClient {
             [JsonProperty("data")]
             public DownsampleChannelRequestData Data { get; set; }
 
-            public DownsampleChannelRequest(int recordingId, string deviceId, string channel, int factor) : base("recording_downsample_channel") {
+            public DownsampleChannelRequest(int recordingId, string deviceId, Channel channel, int factor) : base("recording_downsample_channel") {
                 Data = new DownsampleChannelRequestData(recordingId, deviceId, channel, factor);
             }
         }
 
         private class GetChannelDataCountRequest : Request {
+
             [JsonProperty("data")]
             public ChannelRequestData Data { get; set; }
 
-            public GetChannelDataCountRequest(int recordingId, string deviceId, string channel) : base("recording_get_channel_data_count") {
+            public GetChannelDataCountRequest(int recordingId, string deviceId, Channel channel) : base("recording_get_channel_data_count") {
                 Data = new ChannelRequestData(recordingId, deviceId, channel);
             }
         }
 
         private class GetChannelDataCountResponse : Response {
+
             public class GetChannelDataCountResponseData {
+
                 [JsonProperty("count")]
                 public long Count { get; set; }
             }
@@ -71,11 +82,13 @@ namespace OtiiTcpClient {
         }
 
         private class GetChannelDataIndexRequest : Request {
+
             public class GetChannelDataIndexRequestData : ChannelRequestData {
+
                 [JsonProperty("timestamp")]
                 public double Timestamp { get; set; }
 
-                public GetChannelDataIndexRequestData(int recordingId, string deviceId, string channel, double timestamp) : base(recordingId, deviceId, channel) {
+                public GetChannelDataIndexRequestData(int recordingId, string deviceId, Channel channel, double timestamp) : base(recordingId, deviceId, channel) {
                     Timestamp = timestamp;
                 }
             }
@@ -83,13 +96,15 @@ namespace OtiiTcpClient {
             [JsonProperty("data")]
             public GetChannelDataIndexRequestData Data { get; set; }
 
-            public GetChannelDataIndexRequest(int recordingId, string deviceId, string channel, double timestamp) : base("recording_get_channel_data_index") {
+            public GetChannelDataIndexRequest(int recordingId, string deviceId, Channel channel, double timestamp) : base("recording_get_channel_data_index") {
                 Data = new GetChannelDataIndexRequestData(recordingId, deviceId, channel, timestamp);
             }
         }
 
         private class GetChannelDataIndexResponse : Response {
+
             public class GetChannelDataIndexResponseData {
+
                 [JsonProperty("index")]
                 public long Index { get; set; }
             }
@@ -99,14 +114,16 @@ namespace OtiiTcpClient {
         }
 
         private class GetChannelDataRequest : Request {
+
             public class GetChannelDataRequestData : ChannelRequestData {
+
                 [JsonProperty("index")]
                 public long Index { get; set; }
 
                 [JsonProperty("count")]
                 public long Count { get; set; }
 
-                public GetChannelDataRequestData(int recordingId, string deviceId, string channel, long index, long count) : base(recordingId, deviceId, channel) {
+                public GetChannelDataRequestData(int recordingId, string deviceId, Channel channel, long index, long count) : base(recordingId, deviceId, channel) {
                     Index = index;
                     Count = count;
                 }
@@ -115,13 +132,15 @@ namespace OtiiTcpClient {
             [JsonProperty("data")]
             public GetChannelDataRequestData Data { get; set; }
 
-            public GetChannelDataRequest(int recordingId, string deviceId, string channel, long index, long count) : base("recording_get_channel_data") {
+            public GetChannelDataRequest(int recordingId, string deviceId, Channel channel, long index, long count) : base("recording_get_channel_data") {
                 Data = new GetChannelDataRequestData(recordingId, deviceId, channel, index, count);
             }
         }
 
         private class GetAnalogChannelDataResponse : Response {
+
             public class GetAnalogChannelDataResponseData {
+
                 [JsonProperty("data_type")]
                 public string DataType { get; set; }
 
@@ -140,7 +159,9 @@ namespace OtiiTcpClient {
         }
 
         private class GetDigitalChannelDataResponse : Response {
+
             public class DigitalValue {
+
                 [JsonProperty("timestamp")]
                 public double Timestamp { get; set; }
 
@@ -149,6 +170,7 @@ namespace OtiiTcpClient {
             }
 
             public class GetDigitalChannelDataResponseData {
+
                 [JsonProperty("data_type")]
                 public string DataType { get; set; }
 
@@ -161,7 +183,9 @@ namespace OtiiTcpClient {
         }
 
         private class GetLogChannelDataResponse : Response {
+
             public class LogValue {
+
                 [JsonProperty("timestamp")]
                 public double Timestamp { get; set; }
 
@@ -170,6 +194,7 @@ namespace OtiiTcpClient {
             }
 
             public class GetLogChannelDataResponseData {
+
                 [JsonProperty("data_type")]
                 public string DataType { get; set; }
 
@@ -182,16 +207,19 @@ namespace OtiiTcpClient {
         }
 
         private class GetChannelInfoRequest : Request {
+
             [JsonProperty("data")]
             public ChannelRequestData Data { get; set; }
 
-            public GetChannelInfoRequest(int recordingId, string deviceId, string channel) : base("recording_get_channel_info") {
+            public GetChannelInfoRequest(int recordingId, string deviceId, Channel channel) : base("recording_get_channel_info") {
                 Data = new ChannelRequestData(recordingId, deviceId, channel);
             }
         }
 
         private class GetIChannelnfoResponse : Response {
+
             public class GetChannelInfoResponseData {
+
                 [JsonProperty("offset")]
                 public double Offset { get; set; }
 
@@ -210,14 +238,16 @@ namespace OtiiTcpClient {
         }
 
         private class GetChannelStatisticsRequest : Request {
+
             public class GetChannelStatisticsRequestData : ChannelRequestData {
+
                 [JsonProperty("from")]
                 public double From { get; set; }
 
                 [JsonProperty("to")]
                 public double To { get; set; }
 
-                public GetChannelStatisticsRequestData(int recordingId, string deviceId, string channel, double from, double to) : base(recordingId, deviceId, channel) {
+                public GetChannelStatisticsRequestData(int recordingId, string deviceId, Channel channel, double from, double to) : base(recordingId, deviceId, channel) {
                     From = from;
                     To = to;
                 }
@@ -226,13 +256,15 @@ namespace OtiiTcpClient {
             [JsonProperty("data")]
             public GetChannelStatisticsRequestData Data { get; set; }
 
-            public GetChannelStatisticsRequest(int recordingId, string deviceId, string channel, double from, double to) : base("recording_get_channel_statistics") {
+            public GetChannelStatisticsRequest(int recordingId, string deviceId, Channel channel, double from, double to) : base("recording_get_channel_statistics") {
                 Data = new GetChannelStatisticsRequestData(recordingId, deviceId, channel, from, to);
             }
         }
 
         private class GetChannelStatisticsResponse : Response {
+
             public class GetChannelStatisticsResponseData {
+
                 [JsonProperty("min")]
                 public double Min { get; set; }
 
@@ -251,16 +283,19 @@ namespace OtiiTcpClient {
         }
 
         private class GetLogOffsetRequest : Request {
+
             [JsonProperty("data")]
             public ChannelRequestData Data { get; set; }
 
-            public GetLogOffsetRequest(int recordingId, string deviceId, string channel) : base("recording_get_log_offset") {
+            public GetLogOffsetRequest(int recordingId, string deviceId, Channel channel) : base("recording_get_log_offset") {
                 Data = new ChannelRequestData(recordingId, deviceId, channel);
             }
         }
 
         private class GetLogOffsetResponse : Response {
+
             public class GetLogOffsetResponseData {
+
                 [JsonProperty("offset")]
                 public long Offset { get; set; }
             }
@@ -270,6 +305,7 @@ namespace OtiiTcpClient {
         }
 
         private class GetOffsetRequest : Request {
+
             [JsonProperty("data")]
             public RecordingRequestData Data { get; set; }
 
@@ -279,7 +315,9 @@ namespace OtiiTcpClient {
         }
 
         private class GetOffsetResponse : Response {
+
             public class GetOffsetResponseData {
+
                 [JsonProperty("offset")]
                 public long Offset { get; set; }
             }
@@ -289,7 +327,9 @@ namespace OtiiTcpClient {
         }
 
         private class ImportLogRequest : Request {
+
             public class ImportLogRequestData : RecordingRequestData {
+
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
 
@@ -311,6 +351,7 @@ namespace OtiiTcpClient {
         }
 
         private class IsRunningRequest : Request {
+
             [JsonProperty("data")]
             public RecordingRequestData Data { get; set; }
 
@@ -320,7 +361,9 @@ namespace OtiiTcpClient {
         }
 
         private class IsRunningResponse : Response {
+
             public class IsRunningResponseData {
+
                 [JsonProperty("running")]
                 public bool Running { get; set; }
             }
@@ -330,7 +373,9 @@ namespace OtiiTcpClient {
         }
 
         private class LogRequest : Request {
+
             public class LogRequestData : RecordingRequestData {
+
                 [JsonProperty("text")]
                 public string Text { get; set; }
 
@@ -352,7 +397,9 @@ namespace OtiiTcpClient {
         }
 
         private class RenameRequest : Request {
+
             public class RenameRequestData : RecordingRequestData {
+
                 [JsonProperty("name")]
                 public string Name { get; set; }
 
@@ -370,11 +417,13 @@ namespace OtiiTcpClient {
         }
 
         private class SetLogOffsetRequest : Request {
+
             public class SetLogOffsetRequestData : ChannelRequestData {
+
                 [JsonProperty("offset")]
                 public long Offset { get; set; }
 
-                public SetLogOffsetRequestData(int recordingId, string deviceId, string channel, long offset) : base(recordingId, deviceId, channel) {
+                public SetLogOffsetRequestData(int recordingId, string deviceId, Channel channel, long offset) : base(recordingId, deviceId, channel) {
                     Offset = offset;
                 }
             }
@@ -382,13 +431,15 @@ namespace OtiiTcpClient {
             [JsonProperty("data")]
             public SetLogOffsetRequestData Data { set; get; }
 
-            public SetLogOffsetRequest(int recordingId, string deviceId, string channel, long offset) : base("recording_set_log_offset") {
+            public SetLogOffsetRequest(int recordingId, string deviceId, Channel channel, long offset) : base("recording_set_log_offset") {
                 Data = new SetLogOffsetRequestData(recordingId, deviceId, channel, offset);
             }
         }
 
         private class SetOffsetRequest : Request {
+
             public class SetOffsetRequestData : RecordingRequestData {
+
                 [JsonProperty("offset")]
                 public long Offset { get; set; }
 

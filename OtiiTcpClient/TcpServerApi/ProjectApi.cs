@@ -2,8 +2,11 @@
 using Newtonsoft.Json;
 
 namespace OtiiTcpClient {
+
     public partial class Project {
+
         private class ProjectRequestData {
+
             [JsonProperty("project_id")]
             public int ProjectId { get; set; }
 
@@ -13,6 +16,7 @@ namespace OtiiTcpClient {
         }
 
         private class RecordingResponseData {
+
             [JsonProperty("recording_id")]
             public int RecordingId { get; set; }
 
@@ -27,7 +31,9 @@ namespace OtiiTcpClient {
         }
 
         private class CloseRequest : Request {
+
             public class CloseRequestData : ProjectRequestData {
+
                 [JsonProperty("force")]
                 public bool Force { get; set; }
 
@@ -45,7 +51,9 @@ namespace OtiiTcpClient {
         }
 
         private class CropDataRequest : Request {
+
             public class CropDataRequestData : ProjectRequestData {
+
                 [JsonProperty("start")]
                 public double Start { get; set; }
 
@@ -67,6 +75,7 @@ namespace OtiiTcpClient {
         }
 
         private class GetLastRecordingRequest : Request {
+
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
 
@@ -76,11 +85,13 @@ namespace OtiiTcpClient {
         }
 
         private class GetLastRecordingResponse : Response {
+
             [JsonProperty("data")]
             public RecordingResponseData Data { get; set; }
         }
 
         private class GetRecordingsRequest : Request {
+
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
 
@@ -90,7 +101,9 @@ namespace OtiiTcpClient {
         }
 
         private class GetRecordingsResponse : Response {
+
             public class GetRecordingsResponseData {
+
                 [JsonProperty("recordings")]
                 public RecordingResponseData[] Recordings { get; set; }
             }
@@ -100,7 +113,9 @@ namespace OtiiTcpClient {
         }
 
         private class SaveRequest : Request {
+
             public class SaveRequestData : ProjectRequestData {
+
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
 
@@ -126,7 +141,9 @@ namespace OtiiTcpClient {
         }
 
         private class SaveResponse : Response {
+
             public class SaveResponseData {
+
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
             }
@@ -136,6 +153,7 @@ namespace OtiiTcpClient {
         }
 
         private class StartRecordingRequest : Request {
+
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
 
@@ -145,6 +163,7 @@ namespace OtiiTcpClient {
         }
 
         private class StopRecordingRequest : Request {
+
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
 

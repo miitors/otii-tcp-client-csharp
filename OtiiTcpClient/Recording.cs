@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using OtiiTcpClient.Types;
 
 namespace OtiiTcpClient {
     public partial class Recording {
@@ -90,7 +91,7 @@ namespace OtiiTcpClient {
         /// <param name="deviceId">id of capturing device.</param>
         /// <param name="channel">channel name.</param>
         /// <param name="factor">factor to downsample channel with.</param>
-        public void DownsampleChannel(string deviceId, string channel, int factor) {
+        public void DownsampleChannel(string deviceId, Channel channel, int factor) {
             var request = new DownsampleChannelRequest(_recordingId, deviceId, channel, factor);
             _client.PostRequest(request);
         }
@@ -101,7 +102,7 @@ namespace OtiiTcpClient {
         /// <param name="deviceId">id of capturing device.</param>
         /// <param name="channel">channel name.</param>
         /// <returns>The number of data entries.</returns>
-        public long GetChannelDataCount(string deviceId, string channel) {
+        public long GetChannelDataCount(string deviceId, Channel channel) {
             var request = new GetChannelDataCountRequest(_recordingId, deviceId, channel);
             var response = _client.PostRequest<GetChannelDataCountRequest, GetChannelDataCountResponse>(request);
             return response.Data.Count;
@@ -114,7 +115,7 @@ namespace OtiiTcpClient {
         /// <param name="channel">channel name.</param>
         /// <param name="timestamp">timestamp in s.</param>
         /// <returns></returns>
-        public long GetChannelDataIndex(string deviceId, string channel, double timestamp) {
+        public long GetChannelDataIndex(string deviceId, Channel channel, double timestamp) {
             var request = new GetChannelDataIndexRequest(_recordingId, deviceId, channel, timestamp);
             var response = _client.PostRequest<GetChannelDataIndexRequest, GetChannelDataIndexResponse>(request);
             return response.Data.Index;
@@ -128,7 +129,7 @@ namespace OtiiTcpClient {
         /// <param name="index">start index to fetch data entries from, first index at 0.</param>
         /// <param name="count">number of data entries to fetch.</param>
         /// <returns></returns>
-        public AnalogData GetAnalogChannelData(string deviceId, string channel, long index, long count) {
+        public AnalogData GetAnalogChannelData(string deviceId, Channel channel, long index, long count) {
             var request = new GetChannelDataRequest(_recordingId, deviceId, channel, index, count);
             var response = _client.PostRequest<GetChannelDataRequest, GetAnalogChannelDataResponse>(request);
             if (response.Data.DataType != "analog") {
@@ -145,7 +146,7 @@ namespace OtiiTcpClient {
         /// <param name="index">start index to fetch data entries from, first index at 0.</param>
         /// <param name="count">number of data entries to fetch.</param>
         /// <returns></returns>
-        public DigitalData[] GetDigitalChannelData(string deviceId, string channel, long index, long count) {
+        public DigitalData[] GetDigitalChannelData(string deviceId, Channel channel, long index, long count) {
             var request = new GetChannelDataRequest(_recordingId, deviceId, channel, index, count);
             var response = _client.PostRequest<GetChannelDataRequest, GetDigitalChannelDataResponse>(request);
             var data = response.Data.Values.Select(value => new DigitalData(value.Timestamp, value.Value));
@@ -161,7 +162,7 @@ namespace OtiiTcpClient {
         /// <param name="count">number of data entries to fetch.</param>
         /// <param name="strip">strip control characters (defaults to true).</param>
         /// <returns></returns>
-        public LogData[] GetLogChannelData(string deviceId, string channel, long index, long count, bool strip = true) {
+        public LogData[] GetLogChannelData(string deviceId, Channel channel, long index, long count, bool strip = true) {
             var request = new GetChannelDataRequest(_recordingId, deviceId, channel, index, count);
             var response = _client.PostRequest<GetChannelDataRequest, GetLogChannelDataResponse>(request);
             var data = response.Data.Values.Select(value => new LogData(value.Timestamp, value.Value));
@@ -177,7 +178,7 @@ namespace OtiiTcpClient {
         /// <param name="deviceId">device id of the capturing device. Exclude for imported logs.</param>
         /// <param name="channel">the channel name. For imported logs, use the log_id returned by import_log.</param>
         /// <returns></returns>
-        public ChannelInfo GetChannelInfo(string deviceId, string channel) {
+        public ChannelInfo GetChannelInfo(string deviceId, Channel channel) {
             var request = new GetChannelInfoRequest(_recordingId, deviceId, channel);
             var response = _client.PostRequest<GetChannelInfoRequest, GetIChannelnfoResponse>(request);
             var data = response.Data;
@@ -192,7 +193,7 @@ namespace OtiiTcpClient {
         /// <param name="from">from time.</param>
         /// <param name="to">from time.</param>
         /// <returns></returns>
-        public ChannelStatistics GetChannelStatistics(string deviceId, string channel, double from, double to) {
+        public ChannelStatistics GetChannelStatistics(string deviceId, Channel channel, double from, double to) {
             var request = new GetChannelStatisticsRequest(_recordingId, deviceId, channel, from, to);
             var response = _client.PostRequest<GetChannelStatisticsRequest, GetChannelStatisticsResponse>(request);
             var data = response.Data;
@@ -205,7 +206,7 @@ namespace OtiiTcpClient {
         /// <param name="deviceId">device id of the capturing device. Exclude for imported logs.</param>
         /// <param name="channel">the channel name. For imported logs, use the log_id returned by import_log.</param>
         /// <returns></returns>
-        public long GetLogOffset(string deviceId, string channel) {
+        public long GetLogOffset(string deviceId, Channel channel) {
             var request = new GetLogOffsetRequest(_recordingId, deviceId, channel);
             var response = _client.PostRequest<GetLogOffsetRequest, GetLogOffsetResponse>(request);
             return response.Data.Offset;
@@ -269,7 +270,7 @@ namespace OtiiTcpClient {
         /// <param name="deviceId">device id of the capturing device. Exclude for imported logs.</param>
         /// <param name="channel">the channel name. For imported logs, use the log_id returned by import_log.</param>
         /// <param name="offset">the new offset to apply in microseconds.</param>
-        public void SetLogOffset(string deviceId, string channel, long offset) {
+        public void SetLogOffset(string deviceId, Channel channel, long offset) {
             var request = new SetLogOffsetRequest(_recordingId, deviceId, channel, offset);
             _client.PostRequest(request);
         }
