@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 
 namespace OtiiTcpClient {
 
+    /// <summary>
+    /// Represents a Otii Project.
+    /// </summary>
     public partial class Project {
 
         private class ProjectRequestData {

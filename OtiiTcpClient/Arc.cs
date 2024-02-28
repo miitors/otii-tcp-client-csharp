@@ -3,13 +3,35 @@ using System.Linq;
 
 namespace OtiiTcpClient {
 
+    /// <summary>
+    /// Represents an Otii Arc device.
+    /// </summary>
     public partial class Arc {
+
+        /// <summary>
+        /// Gets the unique ID of the device.
+        /// </summary>
         public string DeviceId { get; set; }
+
+        /// <summary>
+        /// Gets the device name.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets the device type.
+        /// </summary>
         public DeviceType Type { get; set; }
 
         private readonly OtiiClient _client;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Arc"/> class.
+        /// </summary>
+        /// <param name="client">The <see cref="OtiiClient"/> to use for communication.</param>
+        /// <param name="device_id">The unique ID of the device.</param>
+        /// <param name="name">The device name.</param>
+        /// <param name="type">The device type.</param>
         internal Arc(OtiiClient client, string device_id, string name, DeviceType type) {
             _client = client;
             DeviceId = device_id;
@@ -17,12 +39,38 @@ namespace OtiiTcpClient {
             Type = type;
         }
 
+        /// <summary>
+        /// Represents a supply.
+        /// </summary>
         public class Supply {
+
+            /// <summary>
+            /// Gets the supply ID.
+            /// </summary>
             public int SupplyId;
+
+            /// <summary>
+            /// Gets the supply name.
+            /// </summary>
             public string Name;
+
+            /// <summary>
+            /// Gets the supply manufacturer.
+            /// </summary>
             public string Manufacturer;
+
+            /// <summary>
+            /// Gets the supply model.
+            /// </summary>
             public string Model;
 
+            /// <summary>
+            /// Initializes a new instance of <see cref="Supply"/>.
+            /// </summary>
+            /// <param name="supplyId">The supply ID.</param>
+            /// <param name="name">The supply name.</param>
+            /// <param name="manufacturer">The supply manufacturer.</param>
+            /// <param name="model">The supply model.</param>
             public Supply(int supplyId, string name, string manufacturer, string model) {
                 SupplyId = supplyId;
                 Name = name;
@@ -31,10 +79,26 @@ namespace OtiiTcpClient {
             }
         }
 
+        /// <summary>
+        /// Represents version information of an device.
+        /// </summary>
         public class Version {
+
+            /// <summary>
+            /// Gets the hardware version.
+            /// </summary>
             public string HardwareVersion;
+
+            /// <summary>
+            /// Gets the software version.
+            /// </summary>
             public string FirmwareVersion;
 
+            /// <summary>
+            /// Initializes a new instance of <see cref="Version"/>.
+            /// </summary>
+            /// <param name="hardwareVersion">The hardware version.</param>
+            /// <param name="firmwareVersion">The software version.</param>
             public Version(string hardwareVersion, string firmwareVersion) {
                 HardwareVersion = hardwareVersion;
                 FirmwareVersion = firmwareVersion;
@@ -91,7 +155,7 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get the 4-wire measurement state (available from otii version 2.7.1).
+        /// Get the 4-wire measurement state specified by <see cref="Arc4WireState"/> (available from otii version 2.7.1).
         /// </summary>
         /// <returns>The current state, "cal_invalid", "disabled", "inactive" or "active".</returns>
         public Arc4WireState Get4Wire() {
@@ -153,7 +217,7 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get the current measurement range on the main output.
+        /// Get the current <see cref="MeasurementRange"/> on the main output.
         /// </summary>
         /// <returns>the current range, "low" or "high".</returns>
         public MeasurementRange GetRange() {

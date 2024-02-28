@@ -3,11 +3,22 @@ using System.Linq;
 using OtiiTcpClient.Types;
 
 namespace OtiiTcpClient {
+
+    /// <summary>
+    /// Represents an Otii recording.
+    /// </summary>
     public partial class Recording {
         private readonly OtiiClient _client;
         private readonly int _recordingId;
 
+        /// <summary>
+        /// Gets the name of the recording.
+        /// </summary>
         public string Name;
+
+        /// <summary>
+        /// Gets the start time of the recording.
+        /// </summary>
         public DateTimeOffset StartTime;
 
         internal Recording(OtiiClient client, int recordingId, string name, DateTimeOffset startTime) {
@@ -17,11 +28,32 @@ namespace OtiiTcpClient {
             StartTime = startTime;
         }
 
+        /// <summary>
+        /// Represents analog channel data.
+        /// </summary>
         public class AnalogData {
+
+            /// <summary>
+            /// Gets or sets the timestamp of the first sample in seconds.
+            /// </summary>
             public double Timestamp;
+
+            /// <summary>
+            /// Gets or sets the interval between each sample.
+            /// </summary>
             public double Interval;
+
+            /// <summary>
+            /// Gets or sets the list of analog sample values.
+            /// </summary>
             public double[] Values;
 
+            /// <summary>
+            /// Initializes a new instance of <see cref="AnalogData"/>
+            /// </summary>
+            /// <param name="timestamp">The timestamp of the first sample.</param>
+            /// <param name="interval">The interval between each sample.</param>
+            /// <param name="values">The list of sample values.</param>
             public AnalogData(double timestamp, double interval, double[] values) {
                 Timestamp = timestamp;
                 Interval = interval;
@@ -29,32 +61,90 @@ namespace OtiiTcpClient {
             }
         }
 
+        /// <summary>
+        /// Represents digital channel data.
+        /// </summary>
         public class DigitalData {
+
+            /// <summary>
+            /// Gets or sets the timestamp of the first sample in seconds.
+            /// </summary>
             public double Timestamp;
+
+            /// <summary>
+            /// Gets or sets the digital value.
+            /// </summary>
             public bool Value;
 
+            /// <summary>
+            /// Initializes a new instance of <see cref="DigitalData"/>
+            /// </summary>
+            /// <param name="timestamp">The timestamp of the first sample.</param>
+            /// <param name="value">The sample value.</param>
             public DigitalData(double timestamp, bool value) {
                 Timestamp = timestamp;
                 Value = value;
             }
         }
 
+        /// <summary>
+        /// Represents log data received from UART.
+        /// </summary>
         public class LogData {
+
+            /// <summary>
+            /// Gets or sets the timestamp in seconds.
+            /// </summary>
             public double Timestamp;
+
+            /// <summary>
+            /// Gets or sets the log text.
+            /// </summary>
             public string Value;
 
+            /// <summary>
+            /// Initializes a new instance of <see cref="LogData"/>.
+            /// </summary>
+            /// <param name="timestamp">The timestamp in seconds.</param>
+            /// <param name="value">The log text.</param>
             public LogData(double timestamp, string value) {
                 Timestamp = timestamp;
                 Value = value;
             }
         }
 
+        /// <summary>
+        /// Represents channel info.
+        /// </summary>
         public class ChannelInfo {
+
+            /// <summary>
+            /// Gets or sets the offset of the recording in seconds.
+            /// </summary>
             public double Offset;
+
+            /// <summary>
+            /// Gets or sets the start of the recording in seconds.
+            /// </summary>
             public double From;
+
+            /// <summary>
+            /// Gets or sets the end of the recording in seconds.
+            /// </summary>
             public double To;
+
+            /// <summary>
+            /// Gets or sets the sample rate of the recording.
+            /// </summary>
             public long SampleRate;
 
+            /// <summary>
+            /// Initializes a new instance of <see cref="ChannelInfo"/>.
+            /// </summary>
+            /// <param name="offset">The offset of the recording in seconds.</param>
+            /// <param name="from">The start of the recording in seconds. </param>
+            /// <param name="to">The end of the recording in seconds.</param>
+            /// <param name="sampleRate">The sample rate of the recording.</param>
             public ChannelInfo(double offset, double from, double to, long sampleRate) {
                 Offset = offset;
                 From = from;
@@ -63,12 +153,38 @@ namespace OtiiTcpClient {
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
         public class ChannelStatistics {
+
+            /// <summary>
+            /// Gets or sets the minimum value in the selected interval.
+            /// </summary>
             public double Min;
+
+            /// <summary>
+            /// Gets or sets the maximum value in the selected interval.
+            /// </summary>
             public double Max;
+
+            /// <summary>
+            /// Gets or sets the average value in the selected interval.
+            /// </summary>
             public double Average;
+
+            /// <summary>
+            /// Gets or sets the energy consumed in the interval (if applicable).
+            /// </summary>
             public double Energy;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ChannelStatistics"/>.
+            /// </summary>
+            /// <param name="min">The minimum value in the selected interval.</param>
+            /// <param name="max">The maximum value in the selected interval.</param>
+            /// <param name="average">The average value in the selected interval.</param>
+            /// <param name="energy">The energy consumed in the interval (if applicable).</param>
             public ChannelStatistics(double min, double max, double average, double energy) {
                 Min = min;
                 Max = max;

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 using Newtonsoft.Json;
+using OtiiTcpClient.Types;
 
 namespace OtiiTcpClient {
 
@@ -22,12 +23,15 @@ namespace OtiiTcpClient {
         /// </summary>
         public Otii Otii { get { return _otii; } }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OtiiClient"/> and creates a new instance of <see cref="OtiiTcpClient.Otii"/>.
+        /// </summary>
         public OtiiClient() {
             _otii = new Otii(this);
         }
 
         /// <summary>
-        /// Connect to an Otii TCP Server
+        /// Connect to an Otii TCP Server.
         /// </summary>
         /// <param name="server">server address (default localhost).</param>
         /// <param name="port">port number (default 1905).</param>

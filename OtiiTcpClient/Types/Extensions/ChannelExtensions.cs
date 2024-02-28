@@ -27,6 +27,13 @@ namespace OtiiTcpClient.Types.Extensions {
             return GetEnumValueAttribute<ChannelTypeAttribute>(channel)?.CanGetValue ?? true;
         }
 
+        /// <summary>
+        /// Gets the value of an attribute in <paramref name="value"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to return.</typeparam>
+        /// <param name="value">The enum value.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static T GetEnumValueAttribute<T>(Enum value)
             where T : Attribute {
             var type = value.GetType();

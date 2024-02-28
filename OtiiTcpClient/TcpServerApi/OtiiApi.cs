@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OtiiTcpClient.Types;
 
 namespace OtiiTcpClient {
 
