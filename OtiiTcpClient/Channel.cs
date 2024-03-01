@@ -1,9 +1,8 @@
 ﻿using System.Runtime.Serialization;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
-using OtiiTcpClient.Types.Attributes;
 
-namespace OtiiTcpClient.Types {
+namespace OtiiTcpClient {
 
     /// <summary>
     /// Defines the available channels.

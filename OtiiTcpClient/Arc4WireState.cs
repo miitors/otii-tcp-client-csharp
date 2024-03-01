@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
-namespace OtiiTcpClient.Types {
+namespace OtiiTcpClient {
 
     /// <summary>
     /// Defines the possible 4-wire measurement states.

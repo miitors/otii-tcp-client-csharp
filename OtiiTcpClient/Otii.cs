@@ -17,60 +17,6 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Represents an Otii license.
-        /// </summary>
-        public class License {
-
-            /// <summary>
-            /// Gets or sets the unique identifier for the license.
-            /// </summary>
-            public int Id;
-
-            /// <summary>
-            /// Gets or sets the license type.
-            /// </summary>
-            public string Type;
-
-            /// <summary>
-            /// Gets or sets the available status of the license.
-            /// </summary>
-            public bool Available;
-
-            /// <summary>
-            /// Gets or sets reserved to.
-            /// </summary>
-            public string ReservedTo;
-
-            /// <summary>
-            /// Gets or sets the hostname.
-            /// </summary>
-            public string Hostname;
-
-            /// <summary>
-            /// Gets or sets the license addons.
-            /// </summary>
-            public string[] AddonTypes;
-
-            /// <summary>
-            /// Initializes a new instance of <see cref="License"/>.
-            /// </summary>
-            /// <param name="id">The unique identifier for a license.</param>
-            /// <param name="type">The type of license.</param>
-            /// <param name="available">The available status.</param>
-            /// <param name="reservedTo">The specifications of whom its reserved to.</param>
-            /// <param name="hostname">The hostname.</param>
-            /// <param name="addonTypes">The license addons.</param>
-            public License(int id, string type, bool available, string reservedTo, string hostname, string[] addonTypes) {
-                Id = id;
-                Type = type;
-                Available = available;
-                ReservedTo = reservedTo;
-                Hostname = hostname;
-                AddonTypes = addonTypes;
-            }
-        }
-
-        /// <summary>
         /// Create a new project.
         /// </summary>
         /// <returns>An object representing the newly created project.</returns>
@@ -81,7 +27,7 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get the active project.
+        /// Retrieves the active project.
         /// </summary>
         /// <returns>An object representing the current project if one exists, otherwise null</returns>
         public Project GetActiveProject() {
@@ -92,9 +38,9 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get the device id from the name of the id.
+        /// Retrieves the device id from the name of the id.
         /// </summary>
-        /// <param name="deviceName">the name of the connected device to return the if of.</param>
+        /// <param name="deviceName">The name of the connected device.</param>
         /// <returns>The id of the named device.</returns>
         public string GetDeviceId(string deviceName) {
             var request = new GetDeviceIdRequest(deviceName);
@@ -103,7 +49,7 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get a list of all connected devices.
+        /// Retrieves a list of all connected devices.
         /// </summary>
         /// <param name="timeout">An optional timeout in seconds.</param>
         /// <returns>A list of all connected devices.</returns>
@@ -115,9 +61,9 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get a list of all licenses for the logged in user.
+        /// Retrieves a list of all <see cref="License"/> for the logged in user.
         /// </summary>
-        /// <returns>A list of all licenses.</returns>
+        /// <returns>A list of all <see cref="License"/>.</returns>
         public License[] GetLicenses() {
             var request = new GetLicensesRequest();
             var response = _client.PostRequest<GetLicensesRequest, GetLicensesResponse>(request);
@@ -133,10 +79,10 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Login to license server.
+        /// Login to the license server.
         /// </summary>
-        /// <param name="username">username.</param>
-        /// <param name="password">password.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
         /// <returns></returns>
         public void Login(string username, string password) {
             var request = new LoginRequest(username, password);
@@ -144,7 +90,7 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Logout from license server.
+        /// Logout from the license server.
         /// </summary>
         /// <returns></returns>
         public void Logout() {
@@ -153,12 +99,12 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Open an existing project.
+        /// Opens an existing project.
         /// </summary>
-        /// <param name="filename">path to the project.</param>
-        /// <param name="force">set to true to open a file even if the current project has unsaved data.</param>
-        /// <param name="progress"></param>
-        /// <returns></returns>
+        /// <param name="filename">The path to the project file.</param>
+        /// <param name="force">Set to true to open the file even if the current project has unsaved data.</param>
+        /// <param name="progress">Indicates whether to show progress, during the process.</param>
+        /// <returns>The <see cref="Project"/> loaded from the specified <paramref name="filename"/>.</returns>
         public Project OpenProject(string filename, bool force = false, bool progress = false) {
             var request = new OpenProjectRequest(filename, force, progress);
             var response = _client.PostRequest<OpenProjectRequest, OpenProjectResponse>(request);
@@ -167,7 +113,7 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Reserve license.
+        /// Reserves the specified <paramref name="licenseId"/>.
         /// </summary>
         /// <param name="licenseId">License id to reserve.</param>
         /// <returns></returns>
@@ -177,7 +123,7 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Return license.
+        /// Retrieves license.
         /// </summary>
         /// <param name="licenseId">License id to return.</param>
         /// <returns></returns>
@@ -187,16 +133,16 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Turn on or off the main power on all connected devices.
+        /// Turns the main power on or off for all connected devices.
         /// </summary>
-        /// <param name="enable">true turns on power, false turns off power.</param>
+        /// <param name="enable">Set to true to turn on power, false to turn off power.</param>
         public void SetAllMain(bool enable) {
             var request = new SetAllMainRequest(enable);
             _client.PostRequest(request);
         }
 
         /// <summary>
-        /// Shutdown TCP server.
+        /// Shutdowns TCP server.
         /// </summary>
         public void Shutdown() {
             var request = new ShutdownRequest();

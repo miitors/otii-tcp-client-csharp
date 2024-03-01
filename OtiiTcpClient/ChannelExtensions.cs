@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using OtiiTcpClient.Types.Attributes;
 
-namespace OtiiTcpClient.Types.Extensions {
+namespace OtiiTcpClient {
 
     /// <summary>
     /// Provides extension methods for <see cref="Channel"/>.
@@ -36,6 +35,9 @@ namespace OtiiTcpClient.Types.Extensions {
         /// <exception cref="ArgumentException"></exception>
         public static T GetEnumValueAttribute<T>(Enum value)
             where T : Attribute {
+            if (value == null) {
+                throw new ArgumentNullException(nameof(value), "The value is null.");
+            }
             var type = value.GetType();
             var name = Enum.GetName(type, value) ?? throw new ArgumentException("The value is not defined in the enum.", nameof(value));
             return type.GetMember(name)[0].GetCustomAttribute<T>();

@@ -1,5 +1,4 @@
-﻿using OtiiTcpClient.Types;
-using System.Linq;
+﻿using System.Linq;
 
 namespace OtiiTcpClient {
 
@@ -11,17 +10,17 @@ namespace OtiiTcpClient {
         /// <summary>
         /// Gets the unique ID of the device.
         /// </summary>
-        public string DeviceId { get; set; }
+        public string DeviceId { get; }
 
         /// <summary>
         /// Gets the device name.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the device type.
         /// </summary>
-        public DeviceType Type { get; set; }
+        public DeviceType Type { get; }
 
         private readonly OtiiClient _client;
 
@@ -40,72 +39,6 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Represents a supply.
-        /// </summary>
-        public class Supply {
-
-            /// <summary>
-            /// Gets the supply ID.
-            /// </summary>
-            public int SupplyId;
-
-            /// <summary>
-            /// Gets the supply name.
-            /// </summary>
-            public string Name;
-
-            /// <summary>
-            /// Gets the supply manufacturer.
-            /// </summary>
-            public string Manufacturer;
-
-            /// <summary>
-            /// Gets the supply model.
-            /// </summary>
-            public string Model;
-
-            /// <summary>
-            /// Initializes a new instance of <see cref="Supply"/>.
-            /// </summary>
-            /// <param name="supplyId">The supply ID.</param>
-            /// <param name="name">The supply name.</param>
-            /// <param name="manufacturer">The supply manufacturer.</param>
-            /// <param name="model">The supply model.</param>
-            public Supply(int supplyId, string name, string manufacturer, string model) {
-                SupplyId = supplyId;
-                Name = name;
-                Manufacturer = manufacturer;
-                Model = model;
-            }
-        }
-
-        /// <summary>
-        /// Represents version information of an device.
-        /// </summary>
-        public class Version {
-
-            /// <summary>
-            /// Gets the hardware version.
-            /// </summary>
-            public string HardwareVersion;
-
-            /// <summary>
-            /// Gets the software version.
-            /// </summary>
-            public string FirmwareVersion;
-
-            /// <summary>
-            /// Initializes a new instance of <see cref="Version"/>.
-            /// </summary>
-            /// <param name="hardwareVersion">The hardware version.</param>
-            /// <param name="firmwareVersion">The software version.</param>
-            public Version(string hardwareVersion, string firmwareVersion) {
-                HardwareVersion = hardwareVersion;
-                FirmwareVersion = firmwareVersion;
-            }
-        }
-
-        /// <summary>
         /// Perform internal calibration of an Arc device.
         /// </summary>
         public void Calibrate() {
@@ -116,7 +49,7 @@ namespace OtiiTcpClient {
         /// <summary>
         /// Enable 5V in expansion port.
         /// </summary>
-        /// <param name="enable">true enables 5V output, false disables it.</param>
+        /// <param name="enable">Boolean indicating whether to enable or disable 5V output.</param>
         public void Enable5V(bool enable) {
             var request = new Enable5VRequest(DeviceId, enable);
             _client.PostRequest(request);
@@ -125,7 +58,7 @@ namespace OtiiTcpClient {
         /// <summary>
         /// Enables the expansion port.
         /// </summary>
-        /// <param name="enable">true to enable and false to disable exp port.</param>
+        /// <param name="enable">Boolean indicating whether to enable or disable the expansion port.</param>
         public void EnableExpPort(bool enable) {
             var request = new EnableExpPortRequest(DeviceId, enable);
             _client.PostRequest(request);
@@ -138,7 +71,7 @@ namespace OtiiTcpClient {
         /// Closing a project disables all measurement channels.
         /// </remarks>
         /// <param name="channel">The <see cref="Channel"/> to enable or disable.</param>
-        /// <param name="enable"><see langword="true"/> to enable the channel; <see langword="false"/> to disable it.</param>
+        /// <param name="enable">Boolean indicating whether to enable or disable the <paramref name="channel"/>.</param>
         public void EnableChannel(Channel channel, bool enable) {
             var request = new EnableChannelRequest(DeviceId, channel, enable);
             _client.PostRequest(request);
@@ -146,18 +79,20 @@ namespace OtiiTcpClient {
 
         /// <summary>
         /// Enables RX and TX pins to be a UART.
-        /// Required to be disabled to use RX and TX pins as GPI/GPO.
         /// </summary>
-        /// <param name="enable">true to enable and false to disable UART.</param>
+        /// <remarks>
+        /// Disable UART to use RX and TX as GPI/GPO.
+        /// </remarks>
+        /// <param name="enable">Boolean indicating whether to enable or disable UART.</param>
         public void EnableUart(bool enable) {
             var request = new EnableUartRequest(DeviceId, enable);
             _client.PostRequest(request);
         }
 
         /// <summary>
-        /// Get the 4-wire measurement state specified by <see cref="Arc4WireState"/> (available from otii version 2.7.1).
+        /// Retrieves the 4-wire measurement state specified by <see cref="Arc4WireState"/>.
         /// </summary>
-        /// <returns>The current state, "cal_invalid", "disabled", "inactive" or "active".</returns>
+        /// <returns>The current state, specified in <see cref="Arc4WireState"/>.</returns>
         public Arc4WireState Get4Wire() {
             var request = new Get4WireRequest(DeviceId);
             var response = _client.PostRequest<Get4WireRequest, Get4WireResponse>(request);
@@ -165,9 +100,9 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get adc resistor value.
+        /// Retrieves the adc resistor value.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The ADC resistance value in Ohms.</returns>
         public double GetAdcResistor() {
             var request = new GetAdcResistorRequest(DeviceId);
             var response = _client.PostRequest<GetAdcResistorRequest, GetAdcResistorResponse>(request);
@@ -175,9 +110,9 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get the voltage of the expansion port.
+        /// Retrieves the voltage of the expansion port.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The expansion port voltage value in volts.</returns>
         public double GetExpVoltage() {
             var request = new GetExpVoltageRequest(DeviceId);
             var response = _client.PostRequest<GetExpVoltageRequest, GetExpVoltageResponse>(request);
@@ -185,11 +120,11 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get the state of a GPI pin.
-        /// Requires expansion port to be enabled.
+        /// Retrieves the state of a GPI pin.
+        /// Requires the expansion port to be enabled.
         /// </summary>
-        /// <param name="pin">Id of the GPI pin, 1 or 2.</param>
-        /// <returns>the state of the GPI pin.</returns>
+        /// <param name="pin">The ID of the GPI pin, 1 or 2.</param>
+        /// <returns>The state of the GPI pin (true for high, false for low).</returns>
         public bool GetGpi(int pin) {
             var request = new GetGpiRequest(DeviceId, pin);
             var response = _client.PostRequest<GetGpiRequest, GetGpiResponse>(request);
@@ -197,9 +132,9 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get main voltage value.
+        /// Retrieves the primary voltage reading.
         /// </summary>
-        /// <returns>Voltage in V.</returns>
+        /// <returns>Voltage value in volts.</returns>
         public double GetMainVoltage() {
             var request = new GetMainVoltageRequest(DeviceId);
             var response = _client.PostRequest<GetMainVoltageRequest, GetMainVoltageResponse>(request);
@@ -207,9 +142,9 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get the max allowed current.
+        /// Retrieves the maximum allowed current.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The maximum allowed current.</returns>
         public double GetMaxCurrent() {
             var request = new GetMaxCurrentRequest(DeviceId);
             var response = _client.PostRequest<GetMaxCurrentRequest, GetMaxCurrentResponse>(request);
@@ -217,9 +152,9 @@ namespace OtiiTcpClient {
         }
 
         /// <summary>
-        /// Get the current <see cref="MeasurementRange"/> on the main output.
+        /// Retrieves the <see cref="MeasurementRange"/> on the main output.
         /// </summary>
-        /// <returns>the current range, "low" or "high".</returns>
+        /// <returns>The range, specified in <see cref="MeasurementRange"/>.</returns>
         public MeasurementRange GetRange() {
             var request = new GetRangeRequest(DeviceId);
             var response = _client.PostRequest<GetRangeRequest, GetRangeResponse>(request);

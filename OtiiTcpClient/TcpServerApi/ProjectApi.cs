@@ -18,7 +18,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class RecordingResponseData {
+        private sealed class RecordingResponseData {
 
             [JsonProperty("recording_id")]
             public int RecordingId { get; set; }
@@ -33,9 +33,9 @@ namespace OtiiTcpClient {
             public DateTimeOffset StartTime { get; set; }
         }
 
-        private class CloseRequest : Request {
+        private sealed class CloseRequest : Request {
 
-            public class CloseRequestData : ProjectRequestData {
+            public sealed class CloseRequestData : ProjectRequestData {
 
                 [JsonProperty("force")]
                 public bool Force { get; set; }
@@ -53,9 +53,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class CropDataRequest : Request {
+        private sealed class CropDataRequest : Request {
 
-            public class CropDataRequestData : ProjectRequestData {
+            public sealed class CropDataRequestData : ProjectRequestData {
 
                 [JsonProperty("start")]
                 public double Start { get; set; }
@@ -77,7 +77,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetLastRecordingRequest : Request {
+        private sealed class GetLastRecordingRequest : Request {
 
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
@@ -87,13 +87,13 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetLastRecordingResponse : Response {
+        private sealed class GetLastRecordingResponse : Response {
 
             [JsonProperty("data")]
             public RecordingResponseData Data { get; set; }
         }
 
-        private class GetRecordingsRequest : Request {
+        private sealed class GetRecordingsRequest : Request {
 
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
@@ -103,9 +103,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetRecordingsResponse : Response {
+        private sealed class GetRecordingsResponse : Response {
 
-            public class GetRecordingsResponseData {
+            public sealed class GetRecordingsResponseData {
 
                 [JsonProperty("recordings")]
                 public RecordingResponseData[] Recordings { get; set; }
@@ -115,9 +115,9 @@ namespace OtiiTcpClient {
             public GetRecordingsResponseData Data { get; set; }
         }
 
-        private class SaveRequest : Request {
+        private sealed class SaveRequest : Request {
 
-            public class SaveRequestData : ProjectRequestData {
+            public sealed class SaveRequestData : ProjectRequestData {
 
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
@@ -143,9 +143,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SaveResponse : Response {
+        sealed class SaveResponse : Response {
 
-            public class SaveResponseData {
+            public sealed class SaveResponseData {
 
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
@@ -155,7 +155,7 @@ namespace OtiiTcpClient {
             public SaveResponseData Data { get; set; }
         }
 
-        private class StartRecordingRequest : Request {
+        private sealed class StartRecordingRequest : Request {
 
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
@@ -165,7 +165,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class StopRecordingRequest : Request {
+        private sealed class StopRecordingRequest : Request {
 
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using OtiiTcpClient.Types;
 
 namespace OtiiTcpClient {
 
@@ -29,7 +28,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class DeleteRequest : Request {
+        private sealed class DeleteRequest : Request {
 
             [JsonProperty("data")]
             public RecordingRequestData Data { get; set; }
@@ -39,9 +38,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class DownsampleChannelRequest : Request {
+        private sealed class DownsampleChannelRequest : Request {
 
-            public class DownsampleChannelRequestData : ChannelRequestData {
+            public sealed class DownsampleChannelRequestData : ChannelRequestData {
 
                 [JsonProperty("factor")]
                 public int Factor { get; set; }
@@ -59,7 +58,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetChannelDataCountRequest : Request {
+        private sealed class GetChannelDataCountRequest : Request {
 
             [JsonProperty("data")]
             public ChannelRequestData Data { get; set; }
@@ -69,9 +68,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetChannelDataCountResponse : Response {
+        private sealed class GetChannelDataCountResponse : Response {
 
-            public class GetChannelDataCountResponseData {
+            public sealed class GetChannelDataCountResponseData {
 
                 [JsonProperty("count")]
                 public long Count { get; set; }
@@ -81,9 +80,9 @@ namespace OtiiTcpClient {
             public GetChannelDataCountResponseData Data { get; set; }
         }
 
-        private class GetChannelDataIndexRequest : Request {
+        private sealed class GetChannelDataIndexRequest : Request {
 
-            public class GetChannelDataIndexRequestData : ChannelRequestData {
+            public sealed class GetChannelDataIndexRequestData : ChannelRequestData {
 
                 [JsonProperty("timestamp")]
                 public double Timestamp { get; set; }
@@ -101,9 +100,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetChannelDataIndexResponse : Response {
+        private sealed class GetChannelDataIndexResponse : Response {
 
-            public class GetChannelDataIndexResponseData {
+            public sealed class GetChannelDataIndexResponseData {
 
                 [JsonProperty("index")]
                 public long Index { get; set; }
@@ -113,9 +112,9 @@ namespace OtiiTcpClient {
             public GetChannelDataIndexResponseData Data { get; set; }
         }
 
-        private class GetChannelDataRequest : Request {
+        private sealed class GetChannelDataRequest : Request {
 
-            public class GetChannelDataRequestData : ChannelRequestData {
+            public sealed class GetChannelDataRequestData : ChannelRequestData {
 
                 [JsonProperty("index")]
                 public long Index { get; set; }
@@ -137,9 +136,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetAnalogChannelDataResponse : Response {
+        private sealed class GetAnalogChannelDataResponse : Response {
 
-            public class GetAnalogChannelDataResponseData {
+            public sealed class GetAnalogChannelDataResponseData {
 
                 [JsonProperty("data_type")]
                 public string DataType { get; set; }
@@ -158,9 +157,9 @@ namespace OtiiTcpClient {
             public GetAnalogChannelDataResponseData Data { get; set; }
         }
 
-        private class GetDigitalChannelDataResponse : Response {
+        private sealed class GetDigitalChannelDataResponse : Response {
 
-            public class DigitalValue {
+            public sealed class DigitalValue {
 
                 [JsonProperty("timestamp")]
                 public double Timestamp { get; set; }
@@ -169,7 +168,7 @@ namespace OtiiTcpClient {
                 public bool Value { get; set; }
             }
 
-            public class GetDigitalChannelDataResponseData {
+            public sealed class GetDigitalChannelDataResponseData {
 
                 [JsonProperty("data_type")]
                 public string DataType { get; set; }
@@ -182,9 +181,9 @@ namespace OtiiTcpClient {
             public GetDigitalChannelDataResponseData Data { get; set; }
         }
 
-        private class GetLogChannelDataResponse : Response {
+        private sealed class GetLogChannelDataResponse : Response {
 
-            public class LogValue {
+            public sealed class LogValue {
 
                 [JsonProperty("timestamp")]
                 public double Timestamp { get; set; }
@@ -193,7 +192,7 @@ namespace OtiiTcpClient {
                 public string Value { get; set; }
             }
 
-            public class GetLogChannelDataResponseData {
+            public sealed class GetLogChannelDataResponseData {
 
                 [JsonProperty("data_type")]
                 public string DataType { get; set; }
@@ -206,7 +205,7 @@ namespace OtiiTcpClient {
             public GetLogChannelDataResponseData Data { get; set; }
         }
 
-        private class GetChannelInfoRequest : Request {
+        private sealed class GetChannelInfoRequest : Request {
 
             [JsonProperty("data")]
             public ChannelRequestData Data { get; set; }
@@ -216,9 +215,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetIChannelnfoResponse : Response {
+        private sealed class GetIChannelnfoResponse : Response {
 
-            public class GetChannelInfoResponseData {
+            public sealed class GetChannelInfoResponseData {
 
                 [JsonProperty("offset")]
                 public double Offset { get; set; }
@@ -237,9 +236,9 @@ namespace OtiiTcpClient {
             public GetChannelInfoResponseData Data { get; set; }
         }
 
-        private class GetChannelStatisticsRequest : Request {
+        private sealed class GetChannelStatisticsRequest : Request {
 
-            public class GetChannelStatisticsRequestData : ChannelRequestData {
+            public sealed class GetChannelStatisticsRequestData : ChannelRequestData {
 
                 [JsonProperty("from")]
                 public double From { get; set; }
@@ -261,9 +260,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetChannelStatisticsResponse : Response {
+        private sealed class GetChannelStatisticsResponse : Response {
 
-            public class GetChannelStatisticsResponseData {
+            public sealed class GetChannelStatisticsResponseData {
 
                 [JsonProperty("min")]
                 public double Min { get; set; }
@@ -282,7 +281,7 @@ namespace OtiiTcpClient {
             public GetChannelStatisticsResponseData Data { get; set; }
         }
 
-        private class GetLogOffsetRequest : Request {
+        private sealed class GetLogOffsetRequest : Request {
 
             [JsonProperty("data")]
             public ChannelRequestData Data { get; set; }
@@ -292,9 +291,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetLogOffsetResponse : Response {
+        private sealed class GetLogOffsetResponse : Response {
 
-            public class GetLogOffsetResponseData {
+            public sealed class GetLogOffsetResponseData {
 
                 [JsonProperty("offset")]
                 public long Offset { get; set; }
@@ -304,7 +303,7 @@ namespace OtiiTcpClient {
             public GetLogOffsetResponseData Data { get; set; }
         }
 
-        private class GetOffsetRequest : Request {
+        private sealed class GetOffsetRequest : Request {
 
             [JsonProperty("data")]
             public RecordingRequestData Data { get; set; }
@@ -314,9 +313,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetOffsetResponse : Response {
+        private sealed class GetOffsetResponse : Response {
 
-            public class GetOffsetResponseData {
+            public sealed class GetOffsetResponseData {
 
                 [JsonProperty("offset")]
                 public long Offset { get; set; }
@@ -326,9 +325,9 @@ namespace OtiiTcpClient {
             public GetOffsetResponseData Data { get; set; }
         }
 
-        private class ImportLogRequest : Request {
+        private sealed class ImportLogRequest : Request {
 
-            public class ImportLogRequestData : RecordingRequestData {
+            public sealed class ImportLogRequestData : RecordingRequestData {
 
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
@@ -350,7 +349,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class IsRunningRequest : Request {
+        private sealed class IsRunningRequest : Request {
 
             [JsonProperty("data")]
             public RecordingRequestData Data { get; set; }
@@ -360,9 +359,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class IsRunningResponse : Response {
+        private sealed class IsRunningResponse : Response {
 
-            public class IsRunningResponseData {
+            public sealed class IsRunningResponseData {
 
                 [JsonProperty("running")]
                 public bool Running { get; set; }
@@ -372,9 +371,9 @@ namespace OtiiTcpClient {
             public IsRunningResponseData Data { get; set; }
         }
 
-        private class LogRequest : Request {
+        private sealed class LogRequest : Request {
 
-            public class LogRequestData : RecordingRequestData {
+            public sealed class LogRequestData : RecordingRequestData {
 
                 [JsonProperty("text")]
                 public string Text { get; set; }
@@ -396,9 +395,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class RenameRequest : Request {
+        private sealed class RenameRequest : Request {
 
-            public class RenameRequestData : RecordingRequestData {
+            public sealed class RenameRequestData : RecordingRequestData {
 
                 [JsonProperty("name")]
                 public string Name { get; set; }
@@ -416,9 +415,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetLogOffsetRequest : Request {
+        private sealed class SetLogOffsetRequest : Request {
 
-            public class SetLogOffsetRequestData : ChannelRequestData {
+            public sealed class SetLogOffsetRequestData : ChannelRequestData {
 
                 [JsonProperty("offset")]
                 public long Offset { get; set; }
@@ -436,9 +435,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetOffsetRequest : Request {
+        private sealed class SetOffsetRequest : Request {
 
-            public class SetOffsetRequestData : RecordingRequestData {
+            public sealed class SetOffsetRequestData : RecordingRequestData {
 
                 [JsonProperty("offset")]
                 public long Offset { get; set; }

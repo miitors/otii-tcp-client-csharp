@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 
-namespace OtiiTcpClient.Types {
+namespace OtiiTcpClient {
 
     /// <summary>
     /// Defines the possible Otii device types.

@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net.Sockets;
 using Newtonsoft.Json;
-using OtiiTcpClient.Types;
 
 namespace OtiiTcpClient {
 
@@ -10,13 +9,14 @@ namespace OtiiTcpClient {
     /// OtiiClient is used to create a connection to an Otii TCP server using Connect.
     /// When connected the Otii API can be accessed through the property Otii.
     /// </summary>
-    public class OtiiClient {
+    public class OtiiClient : IDisposable {
         private const string DefaultServer = "localhost";
         private const int DefaultPort = 1905;
-        private TcpClient _client = null;
-        private NetworkStream _stream = null;
-        private Otii _otii = null;
-        private int transId = 0;
+        private TcpClient _client;
+        private NetworkStream _stream;
+        private Otii _otii;
+        private int transId;
+        private bool Disposed;
 
         /// <summary>
         /// The Otii API.
@@ -33,23 +33,28 @@ namespace OtiiTcpClient {
         /// <summary>
         /// Connect to an Otii TCP Server.
         /// </summary>
-        /// <param name="server">server address (default localhost).</param>
-        /// <param name="port">port number (default 1905).</param>
-        public void Connect(string server = DefaultServer, int port = DefaultPort) {
+        /// <param name="server">The server address (default localhost).</param>
+        /// <param name="port">The port number (default 1905).</param>
+        public string Connect(string server = DefaultServer, int port = DefaultPort) {
             _client = new TcpClient(server, port);
             _stream = _client.GetStream();
 
-            var streamReader = new StreamReader(_stream, System.Text.Encoding.UTF8);
-            var responseData = streamReader.ReadLine();
-            ServerStatus status = JsonConvert.DeserializeObject<ServerStatus>(responseData);
+            using (StreamReader streamReader = new StreamReader(_stream, System.Text.Encoding.UTF8, false, 1024, true)) {
+                var responseData = streamReader.ReadLine();
+                ServerStatus status = JsonConvert.DeserializeObject<ServerStatus>(responseData);
+                return status.ToString();
+            }
         }
 
         /// <summary>
         /// Close the connection.
         /// </summary>
         public void Close() {
-            _stream.Close();
+            _stream.Dispose();
             _client.Close();
+
+            _stream = null;
+            _client = null;
         }
 
         /// <summary>
@@ -67,20 +72,28 @@ namespace OtiiTcpClient {
             var data = System.Text.Encoding.UTF8.GetBytes(jsonString);
             _stream.Write(data, 0, data.Length);
 
-            var streamReader = new StreamReader(_stream, System.Text.Encoding.UTF8);
-            var responseData = streamReader.ReadLine();
-            if (responseData == null) {
-                throw new DisconnectedException();
+            var responseData = string.Empty;
+            using (StreamReader streamReader = new StreamReader(_stream, System.Text.Encoding.UTF8, false, 1024, true)) {
+                responseData = streamReader.ReadLine() ?? throw new DisconnectedException();
             }
+
             if (log) {
                 Console.Write(responseData.Substring(0, Math.Min(responseData.Length, 256)));
             }
+
             var response = JsonConvert.DeserializeObject<U>(responseData);
             if (response.Type == "error") {
-                throw new Exception(responseData);
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(responseData);
+                throw new ErrorResponseException(errorResponse);
+            }
+            if (response.Type == "progress") {
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(responseData);
+            }
+            if (response.Type == "information") {
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(responseData);
             }
             if (response.TransId != request.TransId) {
-                throw new Exception("Trans id mismatch");
+                throw new ArgumentException("Trans id mismatch");
             }
             return response;
         }
@@ -89,9 +102,32 @@ namespace OtiiTcpClient {
             PostRequest<T, Response>(request, log);
         }
 
-        private class ServerStatus {
+        /// <inheritdoc cref="IDisposable.Dispose"/>
+        /// <param name="disposing">
+        /// <see langword="true"/> if both managed and unmanaged resources should be disposed;
+        /// <see langword="false"/> if only unmanaged resources should be disposed.
+        /// </param>
+        protected virtual void Dispose(bool disposing) {
+            if (Disposed) {
+                return;
+            }
 
-            public class ServerStatusData {
+            if (disposing) {
+                Close();
+            }
+
+            Disposed = true;
+        }
+
+        /// <inheritdoc/>
+        public void Dispose() {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        private sealed class ServerStatus {
+
+            public sealed class ServerStatusData {
 
                 [JsonProperty("otii_version")]
                 public string OtiiVersion { get; set; }
@@ -101,6 +137,10 @@ namespace OtiiTcpClient {
 
                 [JsonProperty("server")]
                 public string Server { get; set; }
+
+                public override string ToString() {
+                    return $"Otii Version: {OtiiVersion}, Protocol¨Version: {ProtocolVersion}, Server: {Server}";
+                }
             }
 
             [JsonProperty("type")]
@@ -111,6 +151,10 @@ namespace OtiiTcpClient {
 
             [JsonProperty("data")]
             public ServerStatusData Data { get; set; }
+
+            public override string ToString() {
+                return $"Type: {Type}, Info: {Info}, Data: {Data}";
+            }
         }
     }
 

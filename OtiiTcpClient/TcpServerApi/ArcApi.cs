@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using OtiiTcpClient.Types;
 
 namespace OtiiTcpClient {
 
@@ -25,7 +24,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetDoubleRequestData : ArcRequestData {
+        private sealed class SetDoubleRequestData : ArcRequestData {
 
             [JsonProperty("value")]
             public double Value { get; set; }
@@ -35,7 +34,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SupplyData {
+        private sealed class SupplyData {
 
             [JsonProperty("supply_id")]
             public int SupplyId { get; set; }
@@ -50,7 +49,7 @@ namespace OtiiTcpClient {
             public string Model { get; set; }
         }
 
-        private class CalibrateRequest : Request {
+        private sealed class CalibrateRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -60,7 +59,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class Enable5VRequest : Request {
+        private sealed class Enable5VRequest : Request {
 
             [JsonProperty("data")]
             public EnableRequestData Data { get; set; }
@@ -70,7 +69,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class EnableExpPortRequest : Request {
+        private sealed class EnableExpPortRequest : Request {
 
             [JsonProperty("data")]
             public EnableRequestData Data { get; set; }
@@ -80,9 +79,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class EnableChannelRequest : Request {
+        private sealed class EnableChannelRequest : Request {
 
-            public class EnableChannelData : EnableRequestData {
+            public sealed class EnableChannelData : EnableRequestData {
 
                 [JsonProperty("channel")]
                 public Channel Channel { get; set; }
@@ -100,9 +99,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class EnableUartRequest : Request {
+        private sealed class EnableUartRequest : Request {
 
-            public class EnableUartRequestData : ArcRequestData {
+            public sealed class EnableUartRequestData : ArcRequestData {
 
                 [JsonProperty("enable")]
                 public bool Enable { get; set; }
@@ -120,7 +119,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class Get4WireRequest : Request {
+        private sealed class Get4WireRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -130,9 +129,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class Get4WireResponse : Response {
+        private sealed class Get4WireResponse : Response {
 
-            public class Get4WireResponseData {
+            public sealed class Get4WireResponseData {
 
                 [JsonProperty("value")]
                 public Arc4WireState Value { get; set; }
@@ -142,7 +141,7 @@ namespace OtiiTcpClient {
             public Get4WireResponseData Data { get; set; }
         }
 
-        private class GetAdcResistorRequest : Request {
+        private sealed class GetAdcResistorRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -152,9 +151,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetAdcResistorResponse : Response {
+        private sealed class GetAdcResistorResponse : Response {
 
-            public class GetAdcResistorResponseData {
+            public sealed class GetAdcResistorResponseData {
 
                 [JsonProperty("value")]
                 public double Value { get; set; }
@@ -164,7 +163,7 @@ namespace OtiiTcpClient {
             public GetAdcResistorResponseData Data { get; set; }
         }
 
-        private class GetExpVoltageRequest : Request {
+        private sealed class GetExpVoltageRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -174,9 +173,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetExpVoltageResponse : Response {
+        private sealed class GetExpVoltageResponse : Response {
 
-            public class GetExpVoltageResponseData {
+            public sealed class GetExpVoltageResponseData {
 
                 [JsonProperty("value")]
                 public double Value { get; set; }
@@ -186,9 +185,9 @@ namespace OtiiTcpClient {
             public GetExpVoltageResponseData Data { get; set; }
         }
 
-        private class GetGpiRequest : Request {
+        private sealed class GetGpiRequest : Request {
 
-            public class GetGpiRequestData : ArcRequestData {
+            public sealed class GetGpiRequestData : ArcRequestData {
 
                 [JsonProperty("pin")]
                 public int Pin { get; set; }
@@ -206,9 +205,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetGpiResponse : Response {
+        private sealed class GetGpiResponse : Response {
 
-            public class GetGpiResponseData {
+            public sealed class GetGpiResponseData {
 
                 [JsonProperty("value")]
                 public bool Value { get; set; }
@@ -218,7 +217,7 @@ namespace OtiiTcpClient {
             public GetGpiResponseData Data { get; set; }
         }
 
-        private class GetMainVoltageRequest : Request {
+        private sealed class GetMainVoltageRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -228,9 +227,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetMainVoltageResponse : Response {
+        private sealed class GetMainVoltageResponse : Response {
 
-            public class GetMainVoltageResponseData {
+            public sealed class GetMainVoltageResponseData {
 
                 [JsonProperty("value")]
                 public double Value { get; set; }
@@ -240,7 +239,7 @@ namespace OtiiTcpClient {
             public GetMainVoltageResponseData Data { get; set; }
         }
 
-        private class GetMaxCurrentRequest : Request {
+        private sealed class GetMaxCurrentRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -250,9 +249,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetMaxCurrentResponse : Response {
+        private sealed class GetMaxCurrentResponse : Response {
 
-            public class GetMaxCurrentResponseData {
+            public sealed class GetMaxCurrentResponseData {
 
                 [JsonProperty("value")]
                 public double Value { get; set; }
@@ -262,7 +261,7 @@ namespace OtiiTcpClient {
             public GetMaxCurrentResponseData Data { get; set; }
         }
 
-        private class GetRangeRequest : Request {
+        private sealed class GetRangeRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -272,9 +271,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetRangeResponse : Response {
+        private sealed class GetRangeResponse : Response {
 
-            public class GetRangeResponseData {
+            public sealed class GetRangeResponseData {
 
                 [JsonProperty("range")]
                 public MeasurementRange Range { get; set; }
@@ -284,7 +283,7 @@ namespace OtiiTcpClient {
             public GetRangeResponseData Data { get; set; }
         }
 
-        private class GetRxRequest : Request {
+        private sealed class GetRxRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -294,9 +293,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetRxResponse : Response {
+        private sealed class GetRxResponse : Response {
 
-            public class GetRxResponseData {
+            public sealed class GetRxResponseData {
 
                 [JsonProperty("value")]
                 public bool Value { get; set; }
@@ -306,7 +305,7 @@ namespace OtiiTcpClient {
             public GetRxResponseData Data { get; set; }
         }
 
-        private class GetSourceCurrentLimitEnabledRequest : Request {
+        private sealed class GetSourceCurrentLimitEnabledRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -316,9 +315,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetSourceCurrentLimitEnabledResponse : Response {
+        private sealed class GetSourceCurrentLimitEnabledResponse : Response {
 
-            public class GetSourceCurrentLimitEnabledResponseData {
+            public sealed class GetSourceCurrentLimitEnabledResponseData {
 
                 [JsonProperty("enabled")]
                 public bool Enabled { get; set; }
@@ -328,7 +327,7 @@ namespace OtiiTcpClient {
             public GetSourceCurrentLimitEnabledResponseData Data { get; set; }
         }
 
-        private class GetSuppliesRequest : Request {
+        private sealed class GetSuppliesRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -338,9 +337,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetSuppliesResponse : Response {
+        private sealed class GetSuppliesResponse : Response {
 
-            public class GetSuppliesResponseData {
+            public sealed class GetSuppliesResponseData {
 
                 [JsonProperty("supplies")]
                 public SupplyData[] Supplies { get; set; }
@@ -350,7 +349,7 @@ namespace OtiiTcpClient {
             public GetSuppliesResponseData Data { get; set; }
         }
 
-        private class GetSupplyRequest : Request {
+        private sealed class GetSupplyRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -360,9 +359,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetSupplyResponse : Response {
+        private sealed class GetSupplyResponse : Response {
 
-            public class GetSupplyResponseData {
+            public sealed class GetSupplyResponseData {
 
                 [JsonProperty("supply_id")]
                 public int SupplyId { get; set; }
@@ -372,7 +371,7 @@ namespace OtiiTcpClient {
             public GetSupplyResponseData Data { get; set; }
         }
 
-        private class GetSupplyParallelRequest : Request {
+        private sealed class GetSupplyParallelRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -382,9 +381,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetSupplyParallelResponse : Response {
+        private sealed class GetSupplyParallelResponse : Response {
 
-            public class GetSupplyParallelResponseData {
+            public sealed class GetSupplyParallelResponseData {
 
                 [JsonProperty("value")]
                 public int Value { get; set; }
@@ -394,7 +393,7 @@ namespace OtiiTcpClient {
             public GetSupplyParallelResponseData Data { get; set; }
         }
 
-        private class GetSupplySeriesRequest : Request {
+        private sealed class GetSupplySeriesRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -404,9 +403,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetSupplySeriesResponse : Response {
+        private sealed class GetSupplySeriesResponse : Response {
 
-            public class GetSupplySeriesResponseData {
+            public sealed class GetSupplySeriesResponseData {
 
                 [JsonProperty("value")]
                 public int Value { get; set; }
@@ -416,7 +415,7 @@ namespace OtiiTcpClient {
             public GetSupplySeriesResponseData Data { get; set; }
         }
 
-        private class GetUartBaudrateRequest : Request {
+        private sealed class GetUartBaudrateRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -426,9 +425,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetUartBaudrateResponse : Response {
+        private sealed class GetUartBaudrateResponse : Response {
 
-            public class GetUartBaudrateResponseData {
+            public sealed class GetUartBaudrateResponseData {
 
                 [JsonProperty("value")]
                 public int Value { get; set; }
@@ -438,9 +437,9 @@ namespace OtiiTcpClient {
             public GetUartBaudrateResponseData Data { get; set; }
         }
 
-        private class GetValueRequest : Request {
+        private sealed class GetValueRequest : Request {
 
-            public class GetValueRequestData : ArcRequestData {
+            public sealed class GetValueRequestData : ArcRequestData {
 
                 [JsonProperty("channel")]
                 public Channel Channel { get; set; }
@@ -458,9 +457,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetValueResponse : Response {
+        private sealed class GetValueResponse : Response {
 
-            public class GetValueResponseData {
+            public sealed class GetValueResponseData {
 
                 [JsonProperty("value")]
                 public double Value { get; set; }
@@ -470,7 +469,7 @@ namespace OtiiTcpClient {
             public GetValueResponseData Data { get; set; }
         }
 
-        private class GetVersionRequest : Request {
+        private sealed class GetVersionRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -480,9 +479,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class GetVersionResponse : Response {
+        private sealed class GetVersionResponse : Response {
 
-            public class GetVersionResponseData {
+            public sealed class GetVersionResponseData {
 
                 [JsonProperty("hw_version")]
                 public string HardwareVersion { get; set; }
@@ -495,7 +494,7 @@ namespace OtiiTcpClient {
             public GetVersionResponseData Data { get; set; }
         }
 
-        private class IsConnectedRequest : Request {
+        private sealed class IsConnectedRequest : Request {
 
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -505,9 +504,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class IsConnectedResponse : Response {
+        private sealed class IsConnectedResponse : Response {
 
-            public class IsConnectedResponseData {
+            public sealed class IsConnectedResponseData {
 
                 [JsonProperty("connected")]
                 public bool Connected { get; set; }
@@ -517,7 +516,7 @@ namespace OtiiTcpClient {
             public IsConnectedResponseData Data { get; set; }
         }
 
-        private class Set4WireRequest : Request {
+        private sealed class Set4WireRequest : Request {
 
             [JsonProperty("data")]
             public EnableRequestData Data { get; set; }
@@ -527,7 +526,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetAdcResistorRequest : Request {
+        private sealed class SetAdcResistorRequest : Request {
 
             [JsonProperty("data")]
             public SetDoubleRequestData Data { get; set; }
@@ -537,7 +536,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetExpVoltageRequest : Request {
+        private sealed class SetExpVoltageRequest : Request {
 
             [JsonProperty("data")]
             public SetDoubleRequestData Data { get; set; }
@@ -547,9 +546,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetGpoRequest : Request {
+        private sealed class SetGpoRequest : Request {
 
-            public class SetGpoRequestData : ArcRequestData {
+            public sealed class SetGpoRequestData : ArcRequestData {
 
                 [JsonProperty("pin")]
                 public int Pin { get; set; }
@@ -571,7 +570,7 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetMainRequest : Request {
+        private sealed class SetMainRequest : Request {
 
             [JsonProperty("data")]
             public EnableRequestData Data { get; set; }
@@ -581,9 +580,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetMainCurrentRequest : Request {
+        private sealed class SetMainCurrentRequest : Request {
 
-            public class SetMainCurrentData : ArcRequestData {
+            public sealed class SetMainCurrentData : ArcRequestData {
 
                 [JsonProperty("value")]
                 public double Value { get; set; }
@@ -601,9 +600,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetMainVoltageRequest : Request {
+        private sealed class SetMainVoltageRequest : Request {
 
-            public class SetMainVoltageData : ArcRequestData {
+            public sealed class SetMainVoltageData : ArcRequestData {
 
                 [JsonProperty("value")]
                 public double Value { get; set; }
@@ -621,9 +620,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetMaxCurrentRequest : Request {
+        private sealed class SetMaxCurrentRequest : Request {
 
-            public class SetMaxCurrentData : ArcRequestData {
+            public sealed class SetMaxCurrentData : ArcRequestData {
 
                 [JsonProperty("value")]
                 public double Value { get; set; }
@@ -641,9 +640,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetPowerRegulationRequest : Request {
+        private sealed class SetPowerRegulationRequest : Request {
 
-            public class SetPowerRegulationRequestData : ArcRequestData {
+            public sealed class SetPowerRegulationRequestData : ArcRequestData {
 
                 [JsonProperty("mode")]
                 public PowerRegulationMode Mode { get; set; }
@@ -661,9 +660,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetRangeRequest : Request {
+        private sealed class SetRangeRequest : Request {
 
-            public class SetRangeRequestData : ArcRequestData {
+            public sealed class SetRangeRequestData : ArcRequestData {
 
                 [JsonProperty("range")]
                 public MeasurementRange Range { get; set; }
@@ -681,9 +680,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetTxRequest : Request {
+        private sealed class SetTxRequest : Request {
 
-            public class SetTxRequestData : ArcRequestData {
+            public sealed class SetTxRequestData : ArcRequestData {
 
                 [JsonProperty("value")]
                 public bool Value { get; set; }
@@ -701,9 +700,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetSourceCurrentLimitEnabledRequest : Request {
+        private sealed class SetSourceCurrentLimitEnabledRequest : Request {
 
-            public class SetSourceCurrentLimitEnabledRequestData : ArcRequestData {
+            public sealed class SetSourceCurrentLimitEnabledRequestData : ArcRequestData {
 
                 [JsonProperty("enable")]
                 public bool Enable { get; set; }
@@ -721,9 +720,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetSupplyRequest : Request {
+        private sealed class SetSupplyRequest : Request {
 
-            public class SetSupplyRequestData : ArcRequestData {
+            public sealed class SetSupplyRequestData : ArcRequestData {
 
                 [JsonProperty("supply_id")]
                 public int SupplyId { get; set; }
@@ -741,9 +740,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class SetUartBaudrateRequest : Request {
+        private sealed class SetUartBaudrateRequest : Request {
 
-            public class SetUartBaudrateRequestData : ArcRequestData {
+            public sealed class SetUartBaudrateRequestData : ArcRequestData {
 
                 [JsonProperty("value")]
                 public int Value { get; set; }
@@ -761,9 +760,9 @@ namespace OtiiTcpClient {
             }
         }
 
-        private class WriteTxRequest : Request {
+        private sealed class WriteTxRequest : Request {
 
-            public class WriteTxRequestData : ArcRequestData {
+            public sealed class WriteTxRequestData : ArcRequestData {
 
                 [JsonProperty("value")]
                 public string Value { get; set; }

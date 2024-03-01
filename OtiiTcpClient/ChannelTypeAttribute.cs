@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace OtiiTcpClient.Types.Attributes {
+namespace OtiiTcpClient {
 
     /// <summary>
     /// Specifies the data type for a channel.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field)]
-    public class ChannelTypeAttribute : Attribute {
+    public sealed class ChannelTypeAttribute : Attribute {
 
         /// <summary>
         /// Gets the channel data type.
