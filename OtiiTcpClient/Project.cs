@@ -1,8 +1,14 @@
 ﻿using System.Linq;
 
-namespace Otii {
+namespace OtiiTcpClient {
+
+    /// <summary>
+    /// Represents a Otii project.
+    /// </summary>
     public partial class Project {
+
         private readonly OtiiClient _client;
+
         private readonly int _projectId;
 
         internal Project(OtiiClient client, int projectId) {

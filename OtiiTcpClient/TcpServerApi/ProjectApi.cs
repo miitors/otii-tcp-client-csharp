@@ -1,9 +1,15 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Otii {
+namespace OtiiTcpClient {
+
+    /// <summary>
+    /// Represents a Otii Project.
+    /// </summary>
     public partial class Project {
+
         private class ProjectRequestData {
+
             [JsonProperty("project_id")]
             public int ProjectId { get; set; }
 
@@ -12,7 +18,8 @@ namespace Otii {
             }
         }
 
-        private class RecordingResponseData {
+        private sealed class RecordingResponseData {
+
             [JsonProperty("recording_id")]
             public int RecordingId { get; set; }
 
@@ -26,8 +33,10 @@ namespace Otii {
             public DateTimeOffset StartTime { get; set; }
         }
 
-        private class CloseRequest : Request {
-            public class CloseRequestData : ProjectRequestData {
+        private sealed class CloseRequest : Request {
+
+            public sealed class CloseRequestData : ProjectRequestData {
+
                 [JsonProperty("force")]
                 public bool Force { get; set; }
 
@@ -44,8 +53,10 @@ namespace Otii {
             }
         }
 
-        private class CropDataRequest : Request {
-            public class CropDataRequestData : ProjectRequestData {
+        private sealed class CropDataRequest : Request {
+
+            public sealed class CropDataRequestData : ProjectRequestData {
+
                 [JsonProperty("start")]
                 public double Start { get; set; }
 
@@ -66,7 +77,8 @@ namespace Otii {
             }
         }
 
-        private class GetLastRecordingRequest : Request {
+        private sealed class GetLastRecordingRequest : Request {
+
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
 
@@ -75,12 +87,14 @@ namespace Otii {
             }
         }
 
-        private class GetLastRecordingResponse : Response {
+        private sealed class GetLastRecordingResponse : Response {
+
             [JsonProperty("data")]
             public RecordingResponseData Data { get; set; }
         }
 
-        private class GetRecordingsRequest : Request {
+        private sealed class GetRecordingsRequest : Request {
+
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
 
@@ -89,8 +103,10 @@ namespace Otii {
             }
         }
 
-        private class GetRecordingsResponse : Response {
-            public class GetRecordingsResponseData {
+        private sealed class GetRecordingsResponse : Response {
+
+            public sealed class GetRecordingsResponseData {
+
                 [JsonProperty("recordings")]
                 public RecordingResponseData[] Recordings { get; set; }
             }
@@ -99,8 +115,10 @@ namespace Otii {
             public GetRecordingsResponseData Data { get; set; }
         }
 
-        private class SaveRequest : Request {
-            public class SaveRequestData : ProjectRequestData {
+        private sealed class SaveRequest : Request {
+
+            public sealed class SaveRequestData : ProjectRequestData {
+
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
 
@@ -125,8 +143,10 @@ namespace Otii {
             }
         }
 
-        private class SaveResponse : Response {
-            public class SaveResponseData {
+        sealed class SaveResponse : Response {
+
+            public sealed class SaveResponseData {
+
                 [JsonProperty("filename")]
                 public string Filename { get; set; }
             }
@@ -135,7 +155,8 @@ namespace Otii {
             public SaveResponseData Data { get; set; }
         }
 
-        private class StartRecordingRequest : Request {
+        private sealed class StartRecordingRequest : Request {
+
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
 
@@ -144,7 +165,8 @@ namespace Otii {
             }
         }
 
-        private class StopRecordingRequest : Request {
+        private sealed class StopRecordingRequest : Request {
+
             [JsonProperty("data")]
             public ProjectRequestData Data { get; set; }
 

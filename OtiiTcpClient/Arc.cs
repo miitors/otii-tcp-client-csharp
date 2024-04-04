@@ -1,42 +1,41 @@
 ﻿using System.Linq;
 
-namespace Otii {
+namespace OtiiTcpClient {
+
+    /// <summary>
+    /// Represents an Otii Arc device.
+    /// </summary>
     public partial class Arc {
-        public string DeviceId { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets the unique ID of the device.
+        /// </summary>
+        public string DeviceId { get; }
+
+        /// <summary>
+        /// Gets the device name.
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        /// Gets the device type.
+        /// </summary>
+        public DeviceType Type { get; }
 
         private readonly OtiiClient _client;
 
-        internal Arc(OtiiClient client, string device_id, string name, string type) {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Arc"/> class.
+        /// </summary>
+        /// <param name="client">The <see cref="OtiiClient"/> to use for communication.</param>
+        /// <param name="device_id">The unique ID of the device.</param>
+        /// <param name="name">The device name.</param>
+        /// <param name="type">The device type.</param>
+        internal Arc(OtiiClient client, string device_id, string name, DeviceType type) {
             _client = client;
             DeviceId = device_id;
             Name = name;
             Type = type;
-        }
-
-        public class Supply {
-            public int SupplyId;
-            public string Name;
-            public string Manufacturer;
-            public string Model;
-
-            public Supply(int supplyId, string name, string manufacturer, string model) {
-                SupplyId = supplyId;
-                Name = name;
-                Manufacturer = manufacturer;
-                Model = model;
-            }
-        }
-
-        public class Version {
-            public string HardwareVersion;
-            public string FirmwareVersion;
-
-            public Version(string hardwareVersion, string firmwareVersion) {
-                HardwareVersion = hardwareVersion;
-                FirmwareVersion = firmwareVersion;
-            }
         }
 
         /// <summary>
@@ -50,7 +49,7 @@ namespace Otii {
         /// <summary>
         /// Enable 5V in expansion port.
         /// </summary>
-        /// <param name="enable">true enables 5V output, false disables it.</param>
+        /// <param name="enable">Boolean indicating whether to enable or disable 5V output.</param>
         public void Enable5V(bool enable) {
             var request = new Enable5VRequest(DeviceId, enable);
             _client.PostRequest(request);
@@ -59,132 +58,51 @@ namespace Otii {
         /// <summary>
         /// Enables the expansion port.
         /// </summary>
-        /// <param name="enable">true to enable and false to disable exp port.</param>
+        /// <param name="enable">Boolean indicating whether to enable or disable the expansion port.</param>
         public void EnableExpPort(bool enable) {
             var request = new EnableExpPortRequest(DeviceId, enable);
             _client.PostRequest(request);
         }
 
         /// <summary>
-        /// Enable or disable a measurement channel.
-        /// <para><b>Available channels:</b></para>
-        /// <list type="table">
-        ///     <listheader>
-        ///         <term>Channel</term>
-        ///         <term>Description</term>
-        ///         <term>Unit</term>
-        ///     </listheader>
-        ///     <item>
-        ///         <term>mc</term>
-        ///         <term>Main Current</term>
-        ///         <term>A</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>mv</term>
-        ///         <term>Main Voltage</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>ac</term>
-        ///         <term>ADC Current</term>
-        ///         <term>A</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>av</term>
-        ///         <term>ADC Voltage</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>sv</term>
-        ///         <term>Sense+ Voltage</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>sn</term>
-        ///         <term>Sense- Voltage</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>vb</term>
-        ///         <term>VBUS</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>vj</term>
-        ///         <term>DC-Jack</term>
-        ///         <term>V</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>tp</term>
-        ///         <term>Temperature</term>
-        ///         <term>°C</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>rx</term>
-        ///         <term>UART Logs</term>
-        ///         <term>Text</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>i1</term>
-        ///         <term>GPI1</term>
-        ///         <term>Digital</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>i2</term>
-        ///         <term>GPI2</term>
-        ///         <term>Digital</term>
-        ///     </item>
-        /// </list>
-        /// <para>In addition to above channels, two more channels are enabled automatically when their respective current channel is enabled:</para>
-        /// <list type="table">
-        ///     <listheader>
-        ///         <term>Channel</term>
-        ///         <term>Description</term>
-        ///         <term>Unit</term>
-        ///     </listheader>
-        ///     <item>
-        ///         <term>me</term>
-        ///         <term>Main Energy</term>
-        ///         <term>J</term>
-        ///     </item>
-        ///     <item>
-        ///         <term>ae</term>
-        ///         <term>ADC Energy</term>
-        ///         <term>J</term>
-        ///     </item>
-        /// </list>
+        /// Enables or disables a specified measurement <see cref="Channel"/> for recording.
         /// </summary>
-        /// <param name="channel">the channel to enable or disable.</param>
-        /// <param name="enable">set to true to enable, and to false to disable.</param>
-        public void EnableChannel(string channel, bool enable) {
+        /// <remarks>
+        /// Closing a project disables all measurement channels.
+        /// </remarks>
+        /// <param name="channel">The <see cref="Channel"/> to enable or disable.</param>
+        /// <param name="enable">Boolean indicating whether to enable or disable the <paramref name="channel"/>.</param>
+        public void EnableChannel(Channel channel, bool enable) {
             var request = new EnableChannelRequest(DeviceId, channel, enable);
             _client.PostRequest(request);
         }
 
         /// <summary>
         /// Enables RX and TX pins to be a UART.
-        /// Required to be disabled to use RX and TX pins as GPI/GPO.
         /// </summary>
-        /// <param name="enable">true to enable and false to disable UART.</param>
+        /// <remarks>
+        /// Disable UART to use RX and TX as GPI/GPO.
+        /// </remarks>
+        /// <param name="enable">Boolean indicating whether to enable or disable UART.</param>
         public void EnableUart(bool enable) {
             var request = new EnableUartRequest(DeviceId, enable);
             _client.PostRequest(request);
         }
 
         /// <summary>
-        /// Get the 4-wire measurement state (available from otii version 2.7.1).
+        /// Retrieves the 4-wire measurement state specified by <see cref="Arc4WireState"/>.
         /// </summary>
-        /// <returns>The current state, "cal_invalid", "disabled", "inactive" or "active".</returns>
-        public string Get4Wire() {
+        /// <returns>The current state, specified in <see cref="Arc4WireState"/>.</returns>
+        public Arc4WireState Get4Wire() {
             var request = new Get4WireRequest(DeviceId);
             var response = _client.PostRequest<Get4WireRequest, Get4WireResponse>(request);
             return response.Data.Value;
         }
 
         /// <summary>
-        /// Get adc resistor value.
+        /// Retrieves the adc resistor value.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The ADC resistance value in Ohms.</returns>
         public double GetAdcResistor() {
             var request = new GetAdcResistorRequest(DeviceId);
             var response = _client.PostRequest<GetAdcResistorRequest, GetAdcResistorResponse>(request);
@@ -192,9 +110,9 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get the voltage of the expansion port.
+        /// Retrieves the voltage of the expansion port.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The expansion port voltage value in volts.</returns>
         public double GetExpVoltage() {
             var request = new GetExpVoltageRequest(DeviceId);
             var response = _client.PostRequest<GetExpVoltageRequest, GetExpVoltageResponse>(request);
@@ -202,11 +120,11 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get the state of a GPI pin.
-        /// Requires expansion port to be enabled.
+        /// Retrieves the state of a GPI pin.
+        /// Requires the expansion port to be enabled.
         /// </summary>
-        /// <param name="pin">Id of the GPI pin, 1 or 2.</param>
-        /// <returns>the state of the GPI pin.</returns>
+        /// <param name="pin">The ID of the GPI pin, 1 or 2.</param>
+        /// <returns>The state of the GPI pin (true for high, false for low).</returns>
         public bool GetGpi(int pin) {
             var request = new GetGpiRequest(DeviceId, pin);
             var response = _client.PostRequest<GetGpiRequest, GetGpiResponse>(request);
@@ -214,9 +132,9 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get main voltage value.
+        /// Retrieves the primary voltage reading.
         /// </summary>
-        /// <returns>Voltage in V.</returns>
+        /// <returns>Voltage value in volts.</returns>
         public double GetMainVoltage() {
             var request = new GetMainVoltageRequest(DeviceId);
             var response = _client.PostRequest<GetMainVoltageRequest, GetMainVoltageResponse>(request);
@@ -224,9 +142,9 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get the max allowed current.
+        /// Retrieves the maximum allowed current.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The maximum allowed current.</returns>
         public double GetMaxCurrent() {
             var request = new GetMaxCurrentRequest(DeviceId);
             var response = _client.PostRequest<GetMaxCurrentRequest, GetMaxCurrentResponse>(request);
@@ -234,10 +152,10 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get the current measurement range on the main output.
+        /// Retrieves the <see cref="MeasurementRange"/> on the main output.
         /// </summary>
-        /// <returns>the current range, "low" or "high".</returns>
-        public string GetRange() {
+        /// <returns>The range, specified in <see cref="MeasurementRange"/>.</returns>
+        public MeasurementRange GetRange() {
             var request = new GetRangeRequest(DeviceId);
             var response = _client.PostRequest<GetRangeRequest, GetRangeResponse>(request);
             return response.Data.Range;
@@ -321,7 +239,7 @@ namespace Otii {
         /// </summary>
         /// <param name="channel">the channel name.</param>
         /// <returns>the value in A, V, °C and Digital.</returns>
-        public double GetValue(string channel) {
+        public double GetValue(Channel channel) {
             var request = new GetValueRequest(DeviceId, channel);
             var response = _client.PostRequest<GetValueRequest, GetValueResponse>(request);
             return response.Data.Value;
@@ -427,7 +345,7 @@ namespace Otii {
         /// Set power regulation mode.
         /// </summary>
         /// <param name="mode">one of the following: "voltage", "current", "off".</param>
-        public void SetPowerRegulation(string mode) {
+        public void SetPowerRegulation(PowerRegulationMode mode) {
             var request = new SetPowerRegulationRequest(DeviceId, mode);
             _client.PostRequest(request);
         }
@@ -436,7 +354,7 @@ namespace Otii {
         /// Set the main outputs measurement range.
         /// </summary>
         /// <param name="range">"low" or "high". "low" will enable auto-range, "high" will force the use of high-range.</param>
-        public void SetRange(string range) {
+        public void SetRange(MeasurementRange range) {
             var request = new SetRangeRequest(DeviceId, range);
             _client.PostRequest(request);
         }

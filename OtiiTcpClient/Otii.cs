@@ -1,32 +1,19 @@
 ﻿using System.Linq;
 
-namespace Otii {
+namespace OtiiTcpClient {
+
     /// <summary>
     /// The Otii class provides methods at the application level of Otii.
     /// </summary>
     public partial class Otii {
         private readonly OtiiClient _client;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="Otii"/> with a <see cref="OtiiClient"/>.
+        /// </summary>
+        /// <param name="client">The Otii client.</param>
         internal Otii(OtiiClient client) {
             _client = client;
-        }
-
-        public class License {
-            public int Id;
-            public string Type;
-            public bool Available;
-            public string ReservedTo;
-            public string Hostname;
-            public string[] AddonTypes;
-
-            public License(int id, string type, bool available, string reservedTo, string hostname, string[] addonTypes) {
-                Id = id;
-                Type = type;
-                Available = available;
-                ReservedTo = reservedTo;
-                Hostname = hostname;
-                AddonTypes = addonTypes;
-            }
         }
 
         /// <summary>
@@ -40,7 +27,7 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get the active project.
+        /// Retrieves the active project.
         /// </summary>
         /// <returns>An object representing the current project if one exists, otherwise null</returns>
         public Project GetActiveProject() {
@@ -51,9 +38,9 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get the device id from the name of the id.
+        /// Retrieves the device id from the name of the id.
         /// </summary>
-        /// <param name="deviceName">the name of the connected device to return the if of.</param>
+        /// <param name="deviceName">The name of the connected device.</param>
         /// <returns>The id of the named device.</returns>
         public string GetDeviceId(string deviceName) {
             var request = new GetDeviceIdRequest(deviceName);
@@ -62,7 +49,7 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get a list of all connected devices.
+        /// Retrieves a list of all connected devices.
         /// </summary>
         /// <param name="timeout">An optional timeout in seconds.</param>
         /// <returns>A list of all connected devices.</returns>
@@ -74,9 +61,9 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get a list of all licenses for the logged in user.
+        /// Retrieves a list of all <see cref="License"/> for the logged in user.
         /// </summary>
-        /// <returns>A list of all licenses.</returns>
+        /// <returns>A list of all <see cref="License"/>.</returns>
         public License[] GetLicenses() {
             var request = new GetLicensesRequest();
             var response = _client.PostRequest<GetLicensesRequest, GetLicensesResponse>(request);
@@ -92,10 +79,10 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Login to license server.
+        /// Login to the license server.
         /// </summary>
-        /// <param name="username">username.</param>
-        /// <param name="password">password.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
         /// <returns></returns>
         public void Login(string username, string password) {
             var request = new LoginRequest(username, password);
@@ -103,7 +90,7 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Logout from license server.
+        /// Logout from the license server.
         /// </summary>
         /// <returns></returns>
         public void Logout() {
@@ -112,12 +99,12 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Open an existing project.
+        /// Opens an existing project.
         /// </summary>
-        /// <param name="filename">path to the project.</param>
-        /// <param name="force">set to true to open a file even if the current project has unsaved data.</param>
-        /// <param name="progress"></param>
-        /// <returns></returns>
+        /// <param name="filename">The path to the project file.</param>
+        /// <param name="force">Set to true to open the file even if the current project has unsaved data.</param>
+        /// <param name="progress">Indicates whether to show progress, during the process.</param>
+        /// <returns>The <see cref="Project"/> loaded from the specified <paramref name="filename"/>.</returns>
         public Project OpenProject(string filename, bool force = false, bool progress = false) {
             var request = new OpenProjectRequest(filename, force, progress);
             var response = _client.PostRequest<OpenProjectRequest, OpenProjectResponse>(request);
@@ -126,7 +113,7 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Reserve license.
+        /// Reserves the specified <paramref name="licenseId"/>.
         /// </summary>
         /// <param name="licenseId">License id to reserve.</param>
         /// <returns></returns>
@@ -136,7 +123,7 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Return license.
+        /// Retrieves license.
         /// </summary>
         /// <param name="licenseId">License id to return.</param>
         /// <returns></returns>
@@ -146,16 +133,16 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Turn on or off the main power on all connected devices.
+        /// Turns the main power on or off for all connected devices.
         /// </summary>
-        /// <param name="enable">true turns on power, false turns off power.</param>
+        /// <param name="enable">Set to true to turn on power, false to turn off power.</param>
         public void SetAllMain(bool enable) {
             var request = new SetAllMainRequest(enable);
             _client.PostRequest(request);
         }
 
         /// <summary>
-        /// Shutdown TCP server.
+        /// Shutdowns TCP server.
         /// </summary>
         public void Shutdown() {
             var request = new ShutdownRequest();
